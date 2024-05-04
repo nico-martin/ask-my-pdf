@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@xenova/transformers": "^2.17.1",
+    "pdfjs-dist": "^4.1.392",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "vector-storage": "^1.0.55"

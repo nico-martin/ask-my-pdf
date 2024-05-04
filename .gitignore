@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+public/models/
+npm-debug.log
+.idea
+.htaccess
+dist/
+.env
+.idea/
