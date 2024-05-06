@@ -1,7 +1,7 @@
 export type Line = {
   entries: Entry[];
   str: string;
-  metadata: { pageNumber: number; lineNumber: number };
+  metadata: { pageNumber: number; lineNumber: number; allLinesNumber: number };
 };
 
 export type Entry = {

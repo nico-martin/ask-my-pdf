@@ -5,32 +5,65 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.69",
     "@types/react-dom": "^18.2.22",
     "@types/uuid": "^9.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "@webgpu/types": "^0.1.40",
     "autoprefixer": "^10.4.19",
     "dotenv": "^16.4.5",
+    "esbuild": "^0.20.2",
+    "eslint": "^9.2.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.6",
     "fs": "^0.0.1-security",
+    "path": "^0.12.7",
     "postcss-mixins": "^10.0.0",
     "postcss-nesting": "^12.1.0",
     "postcss-preset-env": "^9.5.2",
     "prettier": "^3.2.5",
-    "vite": "^5.2.4",
+    "rollup-plugin-node-builtins": "^2.0.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
-    "@xenova/transformers": "^2.17.1",
-    "pdfjs-dist": "^4.1.392",
+    "@mlc-ai/web-tokenizers": "^0.1.2",
+    "@nico-martin/tvmjs": "^0.22.0-dev0",
+    "@xenova/transformers": "github:xenova/transformers.js#da981ac",
+    "pdfjs-dist": "^4.2.67",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "vector-storage": "^1.0.55"
-  }
+    "uuid": "^9.0.1"
+  },
+  "browserslist": [
+    "> 1%"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "importOrder": [
+      "<THIRD_PARTY_MODULES>",
+      "^@theme/(.*)$",
+      "^@app/(.*)$",
+      "^@utils/(.*)$",
+      "^@store/(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+  },
+  "type": "module"
 }

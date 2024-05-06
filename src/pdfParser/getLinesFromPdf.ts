@@ -31,16 +31,21 @@ const getLinesFromPdf = async (file: File): Promise<Array<Line>> => {
         line++;
         lastY = position.y1;
       }
+      const lineIndex = line - 1;
 
-      if (!lines[line]) {
-        lines[line] = {
+      if (!lines[lineIndex]) {
+        lines[lineIndex] = {
           entries: [],
           str: "",
-          metadata: { pageNumber, lineNumber: lineOnPage },
+          metadata: {
+            pageNumber,
+            lineNumber: lineOnPage,
+            allLinesNumber: line,
+          },
         };
       }
 
-      lines[line].entries.push({
+      lines[lineIndex].entries.push({
         str: textItem.str,
         position,
       });
