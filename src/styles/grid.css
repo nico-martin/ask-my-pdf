@@ -1,0 +1,22 @@
+:root {
+  --space: 1rem;
+  --space-half: 0.5rem;
+  --space-grid: 2rem;
+  --space-grid-big: 3rem;
+  --space-grid-half: 1rem;
+  --space-s: 0.8rem;
+  --space-xs: 0.5rem;
+  --space-l: 1.5rem;
+  --space-xl: 3rem;
+  --menu-width: 400px;
+  --border-radius: 8px;
+  --bp-mobile: 800px;
+}
+
+@media (max-width: 800px) {
+  :root {
+    --space-grid: 1.2rem;
+    --space-grid-big: 2.4rem;
+    --space-grid-half: 0.6rem;
+  }
+}

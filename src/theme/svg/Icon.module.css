@@ -1,0 +1,69 @@
+.icon {
+  display: inline-block;
+  line-height: 1;
+
+  svg {
+    text-align: center;
+    vertical-align: middle;
+    fill: currentColor;
+    height: 1em;
+    width: 1em;
+    display: block;
+  }
+}
+
+.hasBorder {
+  border: 1px solid currentColor;
+  height: 1em;
+  line-height: 1em;
+  width: 1em;
+  text-align: center;
+
+  svg {
+    height: 0.6em;
+    vertical-align: inherit;
+  }
+}
+
+.isRound {
+  border-radius: 9999px;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.isSpinning {
+  animation: spinner 1s infinite linear;
+}
+/*
+&--animation-spin-1s {
+  animation: spinner 1s infinite linear;
+}
+*/
+.rotate90 {
+  transform: rotate(90deg);
+}
+
+.rotate180 {
+  transform: rotate(180deg);
+}
+
+.rotate270 {
+  transform: rotate(270deg);
+}
+
+.isCircle {
+  border: 1px solid currentColor;
+  border-radius: 50%;
+
+  svg {
+    transform: scale(0.7);
+  }
+}

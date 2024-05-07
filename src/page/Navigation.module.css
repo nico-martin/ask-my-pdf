@@ -1,0 +1,25 @@
+.root {
+  background-color: var(--c-purple);
+  display: flex;
+  gap: 2em;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8em 1.2em;
+  border-radius: 0.5em;
+  border: 4px solid var(--c-border);
+  box-shadow: 4px 5px 0px 1px var(--c-border);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.github {
+  font-size: 0.8rem;
+}
+
+.about {
+  margin-left: auto;
+  cursor: pointer;
+}

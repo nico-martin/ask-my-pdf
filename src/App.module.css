@@ -1,0 +1,32 @@
+.root {
+}
+
+.navigation {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 6vmin;
+  width: 80%;
+  max-width: 800px;
+}
+
+.content {
+  margin: 0 auto;
+  width: 80%;
+  padding: 14vmin 0 6vmin 0;
+  display: flex;
+  gap: 4vmin;
+}
+
+.pdf {
+  width: 50%;
+}
+
+.chat {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30%;
+  background-color: pink;
+}

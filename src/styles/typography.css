@@ -1,0 +1,69 @@
+:root {
+  --fs: 1rem;
+  --fs-small: 0.9rem;
+  --fs-xsmall: 0.7rem;
+  --fs-xssmall: 0.6rem;
+  --fs-big: 1.2rem;
+  --fs-xbig: 2rem;
+  --font: 'JetBrains Mono', monospace;
+}
+
+html {
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: 100%;
+  line-height: 1.4;
+  color: var(--c-p);
+}
+
+b {
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font);
+  font-weight: 900;
+  line-height: 1.1;
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.3em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+/* button reset */
+button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+a {
+  color: var(--c-primary);
+}
+
+.fs--small {
+  font-size: var(--fs-small);
+}
+
+.fs--xsmall {
+  font-size: var(--fs-xsmall);
+}
+
+.code,
+code {
+  font-family: var(--font);
+}
+
+button {
+  color: var(--c-p);
+}

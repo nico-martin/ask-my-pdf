@@ -1,25 +1,25 @@
-import react from "@vitejs/plugin-react";
-import autoprefixer from "autoprefixer";
-import dotenv from "dotenv";
-import fs from "fs";
-import postcssNesting from "postcss-nesting";
-import postcssPresetEnv from "postcss-preset-env";
-import { defineConfig } from "vite";
-import svgr from "vite-plugin-svgr";
-import tsconfigPaths from "vite-tsconfig-paths";
+import react from '@vitejs/plugin-react';
+import autoprefixer from 'autoprefixer';
+import dotenv from 'dotenv';
+import fs from 'fs';
+import postcssNesting from 'postcss-nesting';
+import postcssPresetEnv from 'postcss-preset-env';
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 dotenv.config();
 
 export default defineConfig({
   build: {
-    target: "es2022",
+    target: 'es2022',
   },
   esbuild: {
-    target: "es2022",
+    target: 'es2022',
   },
   optimizeDeps: {
     esbuildOptions: {
-      target: "es2022",
+      target: 'es2022',
     },
   },
   css: {

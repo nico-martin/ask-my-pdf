@@ -2,8 +2,12 @@ import React from 'react';
 import { Line } from '../pdfParser/types.ts';
 import db from '../store/db.ts';
 import useLlm from '../store/llm/useLlm.ts';
+import cn from '@utils/classnames.tsx';
 
-const ChatBox: React.FC<{ lines: Array<Line> }> = ({ lines }) => {
+const ChatBox: React.FC<{ lines: Array<Line>; className?: string }> = ({
+  lines,
+  className = '',
+}) => {
   const [results, setResults] = React.useState<Array<Array<Line>>>([]);
   const { generate } = useLlm();
   const [llmBusy, setLlmBusy] = React.useState<boolean>(false);
@@ -11,7 +15,7 @@ const ChatBox: React.FC<{ lines: Array<Line> }> = ({ lines }) => {
     React.useState<number>(0);
   const [llmResponse, setLlmResponse] = React.useState<string>('');
   return (
-    <div>
+    <div className={cn(className)}>
       <div>
         <input id="search" name="search" />
         <button

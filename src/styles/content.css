@@ -1,0 +1,16 @@
+.content {
+  & > * {
+    & + * {
+      margin-top: var(--space);
+    }
+
+    & + h2 {
+      margin-top: var(--space-l);
+    }
+  }
+
+  a {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+}

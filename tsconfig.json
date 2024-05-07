@@ -23,6 +23,15 @@
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": false,
     "paths": {
+      "@theme": [
+        "./src/theme/index.ts"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ]
     },
     "typeRoots": [
       "node_modules/@types",

@@ -1,0 +1,29 @@
+.button {
+  display: flex;
+  background-color: var(--c-white);
+  border: 4px solid var(--c-border);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.iconWrapper {
+  width: 2.5em;
+  height: 2.5em;
+  border-right: 4px solid var(--c-border);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  box-sizing: border-box;
+}
+
+.icon {
+  font-size: 1.6em;
+}
+
+.content {
+  padding: 0 1em;
+  height: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,4 +1,4 @@
-import VectorDB from "../vectorDB/VectorDB.ts";
+import VectorDB from './vectorDB/VectorDB.ts';
 
 const db = new VectorDB<{
   pageNumber: number;
