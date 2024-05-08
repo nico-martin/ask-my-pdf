@@ -1,10 +1,11 @@
 import React from 'react';
-import styles from './ChatBox.module.css';
+import styles from './LlmForm.module.css';
 import { Button, IconName, Modal } from '@theme';
 import { nl2br } from '@utils/functions.ts';
 import useRagContext from '@store/ragContext/useRagContext.ts';
+import cn from '@utils/classnames.ts';
 
-const LlmForm: React.FC = () => {
+const LlmForm: React.FC<{ className?: string }> = ({ className = '' }) => {
   const { processQuery, prompt } = useRagContext();
   const [busy, setBusy] = React.useState<boolean>(false);
   const [promptModal, setPromptModal] = React.useState<boolean>(false);
@@ -20,13 +21,10 @@ const LlmForm: React.FC = () => {
           setBusy(false);
           return;
         }
-        console.log('query', query);
-
         await processQuery(query);
-        console.log('query processed', query);
         setBusy(false);
       }}
-      className={styles.promptForm}
+      className={cn(styles.root, className)}
     >
       <label>
         <span>What do you want to know?</span>

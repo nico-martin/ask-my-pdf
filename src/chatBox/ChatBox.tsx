@@ -44,7 +44,7 @@ const ChatBox: React.FC<{
         </p>
       ) : (
         <div className={styles.promptWrapper}>
-          <LlmForm />
+          <LlmForm className={styles.promptForm} />
           {llmResponse !== '' && (
             <div className={styles.response}>
               <div

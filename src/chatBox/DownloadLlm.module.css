@@ -1,0 +1,12 @@
+.root {
+}
+
+.buttonIconWrapper {
+  background-color: var(--c-green);
+}
+
+.modelDescription {
+  text-align: center;
+  font-size: var(--fs-small);
+  max-width: 400px;
+}

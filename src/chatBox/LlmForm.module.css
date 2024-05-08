@@ -1,0 +1,47 @@
+.root {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  label {
+    width: 100%;
+  }
+}
+
+.search {
+  width: 100%;
+  justify-self: stretch;
+  border: 4px solid var(--c-border);
+  padding: 0.5rem;
+  transition: all 0.1s ease-in;
+  outline: none;
+  margin-top: 1rem;
+
+  &:hover,
+  &:focus {
+    transform: translateY(-1.5px) translateX(-1.5px);
+    box-shadow: 4px 4px 0 1px var(--c-border);
+  }
+}
+
+.buttonIconWrapper {
+  background-color: var(--c-green);
+}
+
+.showPromptButton {
+  width: 0.9rem;
+  height: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  background-color: var(--c-border);
+  border-radius: 50%;
+  color: #fff;
+  position: absolute;
+  right: 0.5rem;
+  top: 3rem;
+  cursor: pointer;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ChatBox.module.css';
+import styles from './DownloadLlm.module.css';
 import { Button, IconName } from '@theme';
 import { formatBytes } from '@utils/functions.ts';
 import Gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
@@ -18,7 +18,7 @@ const DownloadLlm: React.FC<{ className?: string; onFinish: () => void }> = ({
     React.useState<number>(0);
 
   return (
-    <div className={cn(className)}>
+    <div className={cn(className, styles.root)}>
       <Button
         icon={IconName.CREATION}
         onClick={async () => {

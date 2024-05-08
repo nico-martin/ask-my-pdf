@@ -102,13 +102,9 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     prompt += '\n\nAnswer in Markdown format.';
 
     setPrompt(prompt);
-    console.log(prompt);
 
     const startedLlm = new Date();
-    const t = await generate(prompt, (str) => {
-      console.log(str);
-      setLlmResponse(str.output);
-    });
+    const t = await generate(prompt, (str) => setLlmResponse(str.output));
     setBenchmark(
       'generatedMillis',
       new Date().getTime() - startedLlm.getTime()
