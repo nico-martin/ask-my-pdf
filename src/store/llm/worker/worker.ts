@@ -8,8 +8,6 @@ import { WorkerRequest, WorkerResponse } from './types';
 
 const postMessage = (e: WorkerResponse) => self.postMessage(e);
 
-console.log('WORKER');
-
 class GeneratorInstance {
   public model: Model = null;
   private static instance: GeneratorInstance = null;
@@ -52,7 +50,6 @@ class GeneratorInstance {
 }
 
 self.addEventListener('message', async (event: MessageEvent<WorkerRequest>) => {
-  console.log('worker message', event.data);
   const instance = GeneratorInstance.getInstance();
   try {
     const generator = await instance.loadGenerator(

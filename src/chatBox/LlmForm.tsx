@@ -4,6 +4,7 @@ import { Button, IconName, Modal } from '@theme';
 import { nl2br } from '@utils/functions.ts';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import cn from '@utils/classnames.ts';
+import Benchmarks from './Benchmarks.tsx';
 
 const LlmForm: React.FC<{ className?: string }> = ({ className = '' }) => {
   const { processQuery, prompt } = useRagContext();
@@ -51,6 +52,7 @@ const LlmForm: React.FC<{ className?: string }> = ({ className = '' }) => {
       {promptModal && (
         <Modal close={() => setPromptModal(false)} title="Prompt">
           <p dangerouslySetInnerHTML={{ __html: nl2br(prompt) }} />
+          <Benchmarks className={styles.benchmarks} />
         </Modal>
       )}
     </form>

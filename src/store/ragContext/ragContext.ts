@@ -23,6 +23,7 @@ const ragContext = React.createContext<RagContext>({
     pdfParsedMillis: 0,
     entriesVectorized: 0,
     entriesVectorizedMillis: 0,
+    searchDbCount: 0,
     searchDbMillis: 0,
     generatedMillis: 0,
   },

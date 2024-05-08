@@ -10,6 +10,13 @@ export const formatBytes = (bytes: number, decimals: number = 2): string => {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
 
+export const formatMilliseconds = (milliseconds: number): string => {
+  if (milliseconds < 1000) {
+    return `${milliseconds}ms`;
+  }
+  return `${(milliseconds / 1000).toFixed(2)}s`;
+};
+
 export const nl2br = (str: string): string => {
   if (typeof str === 'undefined' || str === null) {
     return '';

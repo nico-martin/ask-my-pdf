@@ -16,6 +16,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     pdfParsedMillis: 0,
     entriesVectorized: 0,
     entriesVectorizedMillis: 0,
+    searchDbCount: 0,
     searchDbMillis: 0,
     generatedMillis: 0,
   });
@@ -64,6 +65,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     const started = new Date();
     const results = await db.search(query);
     setBenchmark('searchDbMillis', new Date().getTime() - started.getTime());
+    setBenchmark('searchDbCount', results.length);
     setResults(results);
 
     const activeLines: Array<number> = [];

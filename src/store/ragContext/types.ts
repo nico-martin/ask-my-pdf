@@ -2,6 +2,7 @@ export interface Benchmarks {
   pdfParsedMillis: number;
   entriesVectorized: number;
   entriesVectorizedMillis: number;
+  searchDbCount: number;
   searchDbMillis: number;
   generatedMillis: number;
 }

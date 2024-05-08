@@ -1,0 +1,13 @@
+.root {
+}
+
+.list {
+  list-style: disc !important;
+  font-size: var(--fs-small);
+  padding-left: 1rem !important;
+  margin-top: 1rem;
+
+  li + li {
+    margin-top: 0.5rem;
+  }
+}

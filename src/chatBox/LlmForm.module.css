@@ -45,3 +45,9 @@
   top: 3rem;
   cursor: pointer;
 }
+
+.benchmarks {
+  margin-top: var(--space-grid);
+  padding-top: var(--space-grid);
+  border-top: 6px solid var(--c-border);
+}
