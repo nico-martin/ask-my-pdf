@@ -7,6 +7,7 @@ import creation from './icons/creation.svg?react';
 import downloadOutline from './icons/download-outline.svg?react';
 import download from './icons/download.svg?react';
 import eraserVariant from './icons/eraser-variant.svg?react';
+import fileDocumentOutline from './icons/file-document-outline.svg?react';
 import formatFont from './icons/formatFont.svg?react';
 import github from './icons/github.svg?react';
 import install from './icons/install.svg?react';
@@ -35,6 +36,7 @@ export enum IconName {
   DOWNLOAD_OUTLINE = 'download-outline',
   DOWNLOAD = 'download',
   ERASER_VARIANT = 'eraser-variant',
+  FILE_DOCUMENT_OUTLINE = 'file-document-outline',
   FORMATFONT = 'formatFont',
   GITHUB = 'github',
   INSTALL = 'install',
@@ -64,6 +66,7 @@ const icons: Record<string, any> = {
   'download-outline': downloadOutline,
   'download': download,
   'eraser-variant': eraserVariant,
+  'file-document-outline': fileDocumentOutline,
   'formatFont': formatFont,
   'github': github,
   'install': install,

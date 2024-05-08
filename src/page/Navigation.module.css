@@ -7,7 +7,7 @@
   padding: 0.8em 1.2em;
   border-radius: 0.5em;
   border: 4px solid var(--c-border);
-  box-shadow: 4px 5px 0px 1px var(--c-border);
+  box-shadow: 4px 5px 0 1px var(--c-border);
 }
 
 .title {
@@ -21,5 +21,9 @@
 
 .about {
   margin-left: auto;
+  cursor: pointer;
+}
+
+.legal {
   cursor: pointer;
 }

@@ -12,6 +12,11 @@ const root = document.getElementById('app');
 const App: React.FC = () => {
   const [pdfLoading, setPdfLoading] = React.useState<boolean>(false);
   const [pdfLines, setPdfLines] = React.useState<Array<Line>>([]);
+  const [pdfTitle, setPdfTitle] = React.useState<string>('');
+  const [activeLines, setActiveLines] = React.useState<{
+    exact: Array<number>;
+    fuzzy: Array<number>;
+  }>({ exact: [], fuzzy: [] });
 
   return (
     <div className={styles.root}>
@@ -23,8 +28,16 @@ const App: React.FC = () => {
           setLines={setPdfLines}
           lines={pdfLines}
           className={styles.pdf}
+          title={pdfTitle}
+          setTitle={setPdfTitle}
+          activeLines={activeLines}
         />
-        <ChatBox lines={pdfLines} className={styles.chat} />
+        <ChatBox
+          lines={pdfLines}
+          className={styles.chat}
+          setActiveLines={setActiveLines}
+          pdfTitle={pdfTitle}
+        />
       </div>
     </div>
   );

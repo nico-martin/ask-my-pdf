@@ -1,32 +1,38 @@
 .root {
+  --content-width: 90%;
+  --content-max-width: 1400px;
+  --content-gap: 4rem;
 }
 
 .navigation {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  top: 6vmin;
-  width: 80%;
+  top: 3rem;
+  width: 60%;
   max-width: 800px;
+  z-index: 999;
 }
 
 .content {
-  margin: 0 auto;
-  width: 80%;
-  padding: 14vmin 0 6vmin 0;
+  min-height: 100vh;
   display: flex;
-  gap: 4vmin;
+  margin: 0 auto;
+  width: var(--content-width);
+  max-width: var(--content-max-width);
+  padding: 12rem 0 6rem 0;
+  height: 100%;
 }
 
 .pdf {
-  width: 50%;
+  width: calc(50% - var(--content-gap) / 2);
 }
 
 .chat {
   position: fixed;
-  left: 50%;
-  top: 50%;
+  left: calc(50% + var(--content-gap) / 2);
+  top: calc(50% + 3rem);
   transform: translateY(-50%);
-  width: 30%;
-  background-color: pink;
+  width: calc(var(--content-width) / 2 - var(--content-gap) / 2);
+  max-width: calc(var(--content-max-width) / 2 - var(--content-gap) / 2);
 }

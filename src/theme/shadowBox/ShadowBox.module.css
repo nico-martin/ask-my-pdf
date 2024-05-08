@@ -69,6 +69,7 @@
   border-left: 6px solid var(--c-border);
   box-sizing: content-box;
   cursor: pointer;
+  background-color: var(--c-green);
 
   &:before,
   &:after {

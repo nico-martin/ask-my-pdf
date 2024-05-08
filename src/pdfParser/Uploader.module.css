@@ -1,0 +1,27 @@
+.root {
+  border: 4px dashed var(--c-yellow-dark);
+  padding: var(--space);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  position: relative;
+  background-color: var(--c-yellow-light);
+}
+
+.button {
+  &:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+}
+
+.buttonIconWrapper {
+  background-color: var(--c-yellow);
+}
+
+.input {
+  display: none;
+}

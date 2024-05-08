@@ -5,11 +5,15 @@ import { Button, IconName, Modal } from '@theme';
 
 const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [aboutModal, setAboutModal] = React.useState<boolean>(false);
+  const [legalModal, setLegalModal] = React.useState<boolean>(false);
   return (
     <nav className={cn(className, styles.root)}>
       <span className={styles.title}>Ask my PDF</span>
       <button className={styles.about} onClick={() => setAboutModal(true)}>
         About
+      </button>
+      <button className={styles.legal} onClick={() => setLegalModal(true)}>
+        Legal
       </button>
       <Button
         className={styles.github}
@@ -17,7 +21,7 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
         href="https://github.com/nico-martin/ask-my-pdf"
         target="_blank"
       >
-        It's Open Source
+        It's Open Source!
       </Button>
       {aboutModal && (
         <Modal close={() => setAboutModal(false)} title="About">
@@ -25,10 +29,13 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
             <b>Ask my PDF</b> is a tool that uses Retrieval Augmented Generation
             (RAG) to interact with a PDF.
           </p>
-          <h2>Legal</h2>
+        </Modal>
+      )}
+      {legalModal && (
+        <Modal close={() => setLegalModal(false)} title="Legal">
           <p>Responsible for the content of this website:</p>
           <p>
-            Nicolas Martin
+            Nico Martin
             <br />
             Marquard-Wocher Strasse 11
             <br />
@@ -41,12 +48,15 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
             <br />
             <a href="mailto:mail@nico.dev">mail@nico.dev</a>
           </p>
+          <h2>Disclaimer</h2>
           <p>
             The texts and contents of this site were created with great care.
             Nevertheless, I cannot give any guarantee with regard to the
             correctness, accuracy, up-to-dateness, reliability and completeness
             of the information.
           </p>
+          <h2>Privacy</h2>
+          <p>This web app does not collect any personal data.</p>
         </Modal>
       )}
     </nav>

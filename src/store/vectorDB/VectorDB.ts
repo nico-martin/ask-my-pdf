@@ -1,4 +1,4 @@
-import { FeatureExtractionPipeline, pipeline } from "@xenova/transformers";
+import { FeatureExtractionPipeline, pipeline } from '@xenova/transformers';
 
 export interface Entry<T> {
   str: string;
@@ -20,12 +20,12 @@ class VectorDB<T = {}> {
 
   private loadExtractor = async () => {
     this.extractor = await pipeline(
-      "feature-extraction",
-      "Xenova/all-MiniLM-L6-v2",
+      'feature-extraction',
+      'Xenova/all-MiniLM-L6-v2',
       {
-        device: "webgpu",
-        dtype: "fp32",
-      },
+        device: 'webgpu',
+        dtype: 'fp32',
+      }
     );
   };
 
@@ -43,18 +43,17 @@ class VectorDB<T = {}> {
 
   public async search(
     query: string,
-    numberOfResults: number = 5,
-  ): Promise<Array<VectorizedEntry<T>>> {
+    numberOfResults: number = 5
+  ): Promise<Array<[VectorizedEntry<T>, number]>> {
     const [queryEmbedding] = await this.embedTexts([query]);
     const queryMagnitude = this.calculateMagnitude(queryEmbedding);
     const scores = this.calculateSimilarityScores(
       this.entries,
       queryEmbedding,
-      queryMagnitude,
+      queryMagnitude
     );
     const sorted = scores.sort((a, b) => b[1] - a[1]);
-    const results = sorted.slice(0, numberOfResults);
-    return results.map((result) => result[0]);
+    return sorted.slice(0, numberOfResults);
   }
 
   public clear(): void {
@@ -62,17 +61,17 @@ class VectorDB<T = {}> {
   }
 
   private async embedTexts(
-    texts: Array<string>,
+    texts: Array<string>
   ): Promise<Array<Array<number>>> {
     try {
       const started = new Date();
       const output = await this.extractor(texts, {
-        pooling: "mean",
+        pooling: 'mean',
         normalize: true,
       });
       console.log(
-        "Time taken to embed:",
-        new Date().getTime() - started.getTime(),
+        'Time taken to embed:',
+        new Date().getTime() - started.getTime()
       );
       return output.tolist();
     } catch (error) {
@@ -91,7 +90,7 @@ class VectorDB<T = {}> {
   private calculateSimilarityScores<T>(
     entries: Array<VectorizedEntry<T>>,
     queryVector: number[],
-    queryMagnitude: number,
+    queryMagnitude: number
   ): Array<[VectorizedEntry<T>, number]> {
     return entries.map((entry) => {
       let dotProduct = 0;
@@ -104,7 +103,7 @@ class VectorDB<T = {}> {
       let score = this.getCosineSimilarityScore(
         dotProduct,
         entry.vectorMagnitude!,
-        queryMagnitude,
+        queryMagnitude
       );
       score = this.normalizeScore(score); // Normalize the score
       return [entry, score];
@@ -114,7 +113,7 @@ class VectorDB<T = {}> {
   private getCosineSimilarityScore(
     dotProduct: number,
     magnitudeA: number,
-    magnitudeB: number,
+    magnitudeB: number
   ): number {
     return dotProduct / (magnitudeA * magnitudeB);
   }

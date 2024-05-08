@@ -7,9 +7,10 @@ import { Icon } from '../index';
 import styles from './Button.module.css';
 
 interface BaseButtonProps {
-  children?: React.JSX.Element | React.JSX.Element[] | string;
+  children?: React.JSX.Element | React.JSX.Element[] | string | string[];
   className?: string;
   classNameIcon?: string;
+  classNameIconWrapper?: string;
   icon?: IconName;
   iconRight?: boolean;
   loading?: boolean;
@@ -22,18 +23,20 @@ interface AnchorButtonProps extends BaseButtonProps {
 }
 
 interface ButtonProps extends BaseButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button: React.FC<AnchorButtonProps | ButtonProps> = ({
   children = '',
   className = '',
   classNameIcon = '',
+  classNameIconWrapper = '',
   onClick = () => {},
   icon = null,
   iconRight = false,
   loading = false,
   disabled = false,
+  contentWidth = 0,
   href = '',
   ...props
 }) =>
@@ -55,7 +58,7 @@ const Button: React.FC<AnchorButtonProps | ButtonProps> = ({
       <div className={styles.bkg} />
       {Boolean(icon) && (
         <span
-          className={cn(styles.iconWrapper, {
+          className={cn(styles.iconWrapper, classNameIconWrapper, {
             [styles.iconLoading]: loading,
           })}
         >
@@ -66,7 +69,12 @@ const Button: React.FC<AnchorButtonProps | ButtonProps> = ({
           />
         </span>
       )}
-      <span className={styles.content}>{children}</span>
+      <span
+        className={styles.content}
+        style={{ ...(contentWidth ? { width: contentWidth } : {}) }}
+      >
+        {children}
+      </span>
     </React.Fragment>
   );
 

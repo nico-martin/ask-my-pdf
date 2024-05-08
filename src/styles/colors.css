@@ -3,13 +3,14 @@
   --c-p: #000;
   --c-p-hover: #000;
   --c-bkg: #f6f6f6;
-  --c-bkg-dark: #eaeaea;
-  --c-bkg-extra-dark: #d9d9d9;
+  --c-bkg-dark: #e4e4e4;
   --c-bkg-light: #fff;
-  --c-bkg-close-button-hover: #e2e2e2;
   --c-border: #000;
+  --c-border-light: #cfcfcf;
 
   --c-yellow: #fff59f;
+  --c-yellow-light: #faf3ae;
+  --c-yellow-dark: #e4d774;
   --c-purple: #a5b4fb;
   --c-green: #b8ff9f;
 }

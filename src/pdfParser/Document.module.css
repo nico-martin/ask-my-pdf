@@ -1,0 +1,45 @@
+.root {
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  display: block;
+  outline: none;
+  margin-bottom: 1.5rem;
+}
+
+.line {
+  font-size: var(--fs-small);
+  position: relative;
+
+  /*
+  &:not(.lineActive) + .line.lineActive {
+    border-top: 3px solid var(--c-yellow-dark);
+  }
+
+  &.lineActive + .line:not(.lineActive) {
+    border-top: 3px solid var(--c-yellow-dark);
+  }*/
+}
+
+.lineActive {
+  background-color: var(--c-bkg-light);
+
+  /*
+  border-left: 3px solid var(--c-yellow-dark);
+  border-right: 3px solid var(--c-yellow-dark);*/
+}
+
+.lineActiveExact {
+  background-color: var(--c-bkg-dark);
+}
+
+.lineNumber {
+  position: absolute;
+  top: 0.2em;
+  left: -1em;
+  opacity: 0.5;
+  font-size: var(--fs-xsmall);
+  transform: translate(-100%, 0);
+}
