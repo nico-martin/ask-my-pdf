@@ -1,20 +1,15 @@
 import React from 'react';
-import cn from '@utils/classnames.tsx';
-import { Line } from './types.ts';
+import cn from '@utils/classnames.ts';
 import styles from './Document.module.css';
+import useRagContext from '@store/ragContext/useRagContext.ts';
 
 const Document: React.FC<{
   className?: string;
-  lines: Array<Line>;
-  title?: string;
-  setTitle?: (title: string) => void;
-  activeLines: {
-    exact: Array<number>;
-    fuzzy: Array<number>;
-  };
-}> = ({ className = '', lines, title, setTitle, activeLines }) => {
+}> = ({ className = '' }) => {
   const ref = React.useRef<HTMLHeadingElement>(null);
-  const defaultTitle = React.useMemo(() => title, []);
+  const { entries, pdfTitle, setPdfTitle, activeLines } = useRagContext();
+
+  const defaultTitle = React.useMemo(() => pdfTitle, []);
 
   const preventEnter = (evt: KeyboardEvent) => {
     if (evt.which === 13) {
@@ -51,13 +46,13 @@ const Document: React.FC<{
     <div className={cn(className, styles.root)}>
       <h2
         ref={ref}
-        onKeyUp={(e) => setTitle((e.target as HTMLElement).innerText)}
+        onKeyUp={(e) => setPdfTitle((e.target as HTMLElement).innerText)}
         contentEditable
         className={styles.title}
       >
         {defaultTitle}
       </h2>
-      {lines.map((line, i) => (
+      {entries.map((line, i) => (
         <p
           data-line-number={line.metadata.allLinesNumber}
           className={cn(styles.line, {

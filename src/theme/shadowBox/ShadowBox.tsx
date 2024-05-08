@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ShadowBox.module.css';
-import cn from '@utils/classnames.tsx';
+import cn from '@utils/classnames.ts';
 
 export interface ShadowBoxPropsI {
   title?: string;

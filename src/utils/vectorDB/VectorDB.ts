@@ -29,7 +29,7 @@ class VectorDB<T = {}> {
     );
   };
 
-  public async addEntries(entries: Array<Entry<T>>): Promise<void> {
+  public async addEntries(entries: Array<Entry<T>>): Promise<Array<Entry<T>>> {
     const embeddings = await this.embedTexts(entries.map((entry) => entry.str));
     entries.map((entry, i) => {
       this.entries.push({
@@ -39,6 +39,7 @@ class VectorDB<T = {}> {
         vectorMagnitude: this.calculateMagnitude(embeddings[i]),
       });
     });
+    return this.entries;
   }
 
   public async search(
@@ -64,15 +65,10 @@ class VectorDB<T = {}> {
     texts: Array<string>
   ): Promise<Array<Array<number>>> {
     try {
-      const started = new Date();
       const output = await this.extractor(texts, {
         pooling: 'mean',
         normalize: true,
       });
-      console.log(
-        'Time taken to embed:',
-        new Date().getTime() - started.getTime()
-      );
       return output.tolist();
     } catch (error) {
       throw error;

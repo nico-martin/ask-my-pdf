@@ -1,5 +1,5 @@
 import React from 'react';
-import cn from '@utils/classnames.tsx';
+import cn from '@utils/classnames.ts';
 import styles from './Navigation.module.css';
 import { Button, IconName, Modal } from '@theme';
 
@@ -37,11 +37,6 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
           <p>
             Nico Martin
             <br />
-            Marquard-Wocher Strasse 11
-            <br />
-            3600 Thun
-          </p>
-          <p>
             <a href="https://nico.dev" target="_blank">
               https://nico.dev
             </a>

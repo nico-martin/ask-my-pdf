@@ -1,15 +1,16 @@
 import React from 'react';
-import cn from '@utils/classnames.tsx';
+import cn from '@utils/classnames.ts';
 
 import styles from './Uploader.module.css';
 import { Button, IconName } from '@theme';
+import useRagContext from '@store/ragContext/useRagContext.ts';
 
 const Uploader: React.FC<{
-  onChange: (file: File) => void;
   className?: string;
-  loading?: boolean;
-}> = ({ onChange, className = '', loading = false }) => {
+}> = ({ className = '' }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const { parsePdf } = useRagContext();
   return (
     <div className={cn(className, styles.root)}>
       <Button
@@ -28,7 +29,9 @@ const Uploader: React.FC<{
         className={styles.input}
         type="file"
         onChange={async (e) => {
-          onChange(e.target.files[0]);
+          setLoading(true);
+          await parsePdf(e.target.files[0]);
+          setLoading(false);
         }}
       />
     </div>
