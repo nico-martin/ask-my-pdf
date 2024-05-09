@@ -2,6 +2,7 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import styles from './Navigation.module.css';
 import { Button, IconName, Modal } from '@theme';
+import gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
 
 const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [aboutModal, setAboutModal] = React.useState<boolean>(false);
@@ -26,8 +27,98 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
       {aboutModal && (
         <Modal close={() => setAboutModal(false)} title="About">
           <p>
-            <b>Ask my PDF</b> is a tool that uses Retrieval Augmented Generation
-            (RAG) to interact with a PDF.
+            <b>
+              Ask my PDF is a tool that uses Retrieval Augmented Generation
+              (RAG) and Artificial Intelligence to interact with a PDF directly
+              in the browser.
+            </b>
+          </p>
+          <p>There are three main pillars this tool is based on:</p>
+          <h3>1. Read the PDF</h3>
+          <p>
+            <b>Ask my PDF</b> uses{' '}
+            <a href="https://www.npmjs.com/package/pdfjs-dist" target="_blank">
+              PDF.js
+            </a>{' '}
+            to process a PDF locally and split the content up into separate
+            lines.
+          </p>
+          <h3>2. Vector Search</h3>
+          <p>
+            Every line will be mapped to a 384 dimensional dense vector space
+            using{' '}
+            <a
+              href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
+              target="_blank"
+            >
+              all-MiniLM-L6-v2
+            </a>{' '}
+            with{' '}
+            <a href="https://github.com/xenova/transformers.js" target="_blank">
+              TransformersJS
+            </a>
+            . Those entries are then stored in an in-memory{' '}
+            <a
+              href="https://gist.github.com/nico-martin/64f2ae35ed9a0f890ef50c8d119a6222"
+              target="_blank"
+            >
+              VectorDB
+            </a>{' '}
+            directly in the browser.
+          </p>
+          <p>
+            As soon as a query is submitted, it is also vectorized and the
+            cosine similarity search is used to find the most similar text
+            sections, together with the lines surrounding them, so as not to
+            lose the context.
+          </p>
+          <h3>3. LLM answer generation</h3>
+          <p>
+            The text sections found this way together with the query and a few
+            instructions are then used as the input prompt to the{' '}
+            <a href={gemma2B.cardLink} target="_blank">
+              {gemma2B.title}
+            </a>{' '}
+            LLM, compiled to WebAssembly and WebGPU using{' '}
+            <a href="https://llm.mlc.ai/" target="_blank">
+              MLC LLM
+            </a>
+            , which will then generate a response.
+          </p>
+          <h2>Credits</h2>
+          <p>
+            <b>Ask my PDF</b> is a project by{' '}
+            <a href="https://nico.dev/" target="_blank">
+              Nico Martin
+            </a>
+            .
+          </p>
+          <h3>Dependencies</h3>
+          <p>
+            <a
+              href="https://github.com/nico-martin/ask-my-pdf/blob/main/package.json"
+              target="_blank"
+            >
+              https://github.com/nico-martin/ask-my-pdf/blob/main/package.json
+            </a>
+          </p>
+
+          <h3>Open Source</h3>
+          <p>
+            <b>Ask my PDF</b> is publicly available on GitHub and is licensed
+            under an{' '}
+            <a
+              href="https://github.com/nico-martin/ask-my-pdf/blob/main/LICENSE"
+              target="_blank"
+            >
+              open source license
+            </a>
+            . Just like most of my projects.
+          </p>
+          <p>
+            <a href="https://github.com/nico-martin/ask-my-pdf" target="_blank">
+              https://github.com/nico-martin/ask-my-pdf
+            </a>
           </p>
         </Modal>
       )}

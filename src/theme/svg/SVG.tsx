@@ -2,14 +2,14 @@ import React from 'react';
 
 import cn from '@utils/classnames';
 
-import icons, { IconType } from './icons.ts';
+import icons, { IconName } from './icons.ts';
 
 const SVG = ({
   icon,
   className = '',
   ...props
 }: {
-  icon: IconType;
+  icon: IconName;
   className?: string;
   [key: string]: any;
 }) => {

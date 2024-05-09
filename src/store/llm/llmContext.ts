@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { RuntimeStats } from "./webllm/static/types.ts";
+import { RuntimeStats } from './webllm/static/types.ts';
 
 export interface CallbackData {
   feedback: string;
@@ -10,10 +10,10 @@ export interface CallbackData {
 }
 
 export interface Context {
-  initialize: (callback: (data: CallbackData) => void) => Promise<boolean>;
+  initialize: (callback?: (data: CallbackData) => void) => Promise<boolean>;
   generate: (
     prompt: string,
-    callback: (data: CallbackData) => void,
+    callback: (data: CallbackData) => void
   ) => Promise<string>;
   ready: boolean;
   busy: boolean;
@@ -21,7 +21,7 @@ export interface Context {
 
 export const context = React.createContext<Context>({
   initialize: async () => true,
-  generate: async () => "",
+  generate: async () => '',
   ready: false,
   busy: false,
 });

@@ -57,7 +57,6 @@ const LlmContextProvider: React.FC<{
   const generate = (
     prompt: string = '',
     callback: (data: CallbackData) => void = null
-    //model: Model = activeLlmModel,
   ): Promise<string> =>
     new Promise((resolve, reject) => {
       setWorkerBusy(true);

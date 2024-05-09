@@ -35,3 +35,16 @@
   align-items: center;
   justify-content: center;
 }
+
+.button:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+
+  .iconWrapper {
+    background-color: var(--c-border-light) !important;
+  }
+
+  .icon {
+    opacity: 0.4;
+  }
+}

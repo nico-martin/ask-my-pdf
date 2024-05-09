@@ -1,3 +1,4 @@
+// @ts-ignore
 import { FeatureExtractionPipeline, pipeline } from '@xenova/transformers';
 
 export interface Entry<T> {

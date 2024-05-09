@@ -29,9 +29,7 @@ const LlmForm: React.FC<{ className?: string }> = ({ className = '' }) => {
     >
       <label>
         <span>What do you want to know?</span>
-        <textarea id="search" name="search" className={styles.search}>
-          Can I build a Scraper that crawls all posts?
-        </textarea>
+        <textarea id="search" name="search" className={styles.search} />
       </label>
       <Button
         icon={IconName.CREATION}

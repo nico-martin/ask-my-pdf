@@ -7,8 +7,9 @@ import showdown from 'showdown';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import DownloadLlm from './DownloadLlm.tsx';
 import LlmForm from './LlmForm.tsx';
+import gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
 
-const LLM_COOKIE = 'llmLoaded';
+const LLM_COOKIE = gemma2B.id + '-loaded';
 const showdownConverter = new showdown.Converter();
 
 const ChatBox: React.FC<{
@@ -21,7 +22,7 @@ const ChatBox: React.FC<{
   );
 
   React.useEffect(() => {
-    window.setTimeout(() => initialize((e) => console.log('init', e)), 200);
+    window.setTimeout(() => llmLoaded && initialize(), 200);
   }, []);
 
   return (
@@ -37,11 +38,11 @@ const ChatBox: React.FC<{
             setLlmLoaded(true);
             Cookies.set(LLM_COOKIE, 'loaded', { expires: 365 });
           }}
-        />
-      ) : entries.length === 0 ? (
+        /> /* : entries.length === 0 ? (
         <p className={styles.addDocument}>
           Please add a document for which you have questions.
         </p>
+      )*/
       ) : (
         <div className={styles.promptWrapper}>
           <LlmForm className={styles.promptForm} />

@@ -46,7 +46,7 @@ const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
         </li>
         <li>
           Answer generated with{' '}
-          <a href={gemma2B.url} target="_blank">
+          <a href={gemma2B.cardLink} target="_blank">
             {gemma2B.title}
           </a>{' '}
           in <b>{formatMilliseconds(benchmarks.generatedMillis)}</b>

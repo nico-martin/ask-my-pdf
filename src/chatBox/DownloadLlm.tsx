@@ -20,6 +20,7 @@ const DownloadLlm: React.FC<{ className?: string; onFinish: () => void }> = ({
   return (
     <div className={cn(className, styles.root)}>
       <Button
+        loading={downloadLLMRunning}
         icon={IconName.CREATION}
         onClick={async () => {
           setDownloadLLMRunning(true);
