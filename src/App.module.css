@@ -2,6 +2,8 @@
   --content-width: 90%;
   --content-max-width: 1400px;
   --content-gap: 4rem;
+
+  position: relative;
 }
 
 .navigation {
@@ -35,4 +37,14 @@
   transform: translateY(-50%);
   width: calc(var(--content-width) / 2 - var(--content-gap) / 2);
   max-width: calc(var(--content-max-width) / 2 - var(--content-gap) / 2);
+}
+
+.footer {
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  bottom: var(--space);
+  transform: translateX(-50%);
+  font-size: var(--fs-xsmall);
+  opacity: 0.6;
 }

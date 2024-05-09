@@ -38,11 +38,11 @@ const ChatBox: React.FC<{
             setLlmLoaded(true);
             Cookies.set(LLM_COOKIE, 'loaded', { expires: 365 });
           }}
-        /> /* : entries.length === 0 ? (
+        />
+      ) : entries.length === 0 ? (
         <p className={styles.addDocument}>
           Please add a document for which you have questions.
         </p>
-      )*/
       ) : (
         <div className={styles.promptWrapper}>
           <LlmForm className={styles.promptForm} />

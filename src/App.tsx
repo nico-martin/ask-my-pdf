@@ -7,6 +7,7 @@ import Navigation from './page/Navigation.tsx';
 import styles from './App.module.css';
 import RagContextProvider from '@store/ragContext/RagContextProvider.tsx';
 
+import { version } from '../package.json';
 const root = document.getElementById('app');
 
 const App: React.FC = () => (
@@ -16,6 +17,14 @@ const App: React.FC = () => (
       <PdfParser className={styles.pdf} />
       <ChatBox className={styles.chat} />
     </div>
+    <footer className={styles.footer}>
+      <p>
+        v.{version} - by{' '}
+        <a href="https://nico.dev" target="_blank">
+          Nico Martin
+        </a>
+      </p>
+    </footer>
   </div>
 );
 
