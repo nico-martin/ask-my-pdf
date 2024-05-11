@@ -44,7 +44,7 @@ const LlmContextProvider: React.FC<{
   };
 
   const initialize = (
-    callback: (data: CallbackData) => void = null
+    callback: (data: CallbackData) => void = () => {}
   ): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       model.id === modelLoaded && resolve(true);
@@ -56,7 +56,7 @@ const LlmContextProvider: React.FC<{
 
   const generate = (
     prompt: string = '',
-    callback: (data: CallbackData) => void = null
+    callback: (data: CallbackData) => void = () => {}
   ): Promise<string> =>
     new Promise((resolve, reject) => {
       setWorkerBusy(true);

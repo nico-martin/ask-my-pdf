@@ -1,13 +1,14 @@
 {
   "name": "ask-my-pdf",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "author": "",
   "license": "MIT",
@@ -21,6 +22,7 @@
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
+    "@vite-pwa/assets-generator": "^0.2.4",
     "@vitejs/plugin-react": "^4.2.1",
     "@webgpu/types": "^0.1.40",
     "autoprefixer": "^10.4.19",
@@ -50,7 +52,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "showdown": "^2.1.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "vite-plugin-pwa": "^0.20.0"
   },
   "browserslist": [
     "> 1%"

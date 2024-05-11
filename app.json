@@ -1,0 +1,18 @@
+{
+  "title": "Ask my PDF",
+  "short": "PDF",
+  "description": "A tool that uses Retrieval Augmented Generation (RAG)\nand Large Language Models to interact with a PDF directly in the browser.",
+  "color": "#000",
+  "colorbkg": "#fff59f",
+  "iconImages": [
+    "public/fav/icon/logo.svg"
+  ],
+  "iconSizes": [
+    96,
+    128,
+    192,
+    256,
+    384,
+    512
+  ]
+}
