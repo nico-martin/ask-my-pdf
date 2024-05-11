@@ -12,7 +12,7 @@ There are three main pillars this tool is based on:
 
 ## 2. Vector Search
 
-Every line will be mapped to a 384 dimensional dense vector space using[all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) with [TransformersJS](https://github.com/xenova/transformers.js). Those entries are then stored in an in-memory [VectorDB](https://gist.github.com/nico-martin/64f2ae35ed9a0f890ef50c8d119a6222) directly in the browser.
+Every line will be mapped to a 384 dimensional dense vector space using [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) with [TransformersJS](https://github.com/xenova/transformers.js). Those entries are then stored in an in-memory [VectorDB](https://gist.github.com/nico-martin/64f2ae35ed9a0f890ef50c8d119a6222) directly in the browser.
 
 As soon as a query is submitted, it is also vectorized and the cosine similarity search is used to find the most similar text sections, together with the lines surrounding them, so as not to lose the context.
 
