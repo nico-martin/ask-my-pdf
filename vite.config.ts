@@ -9,6 +9,7 @@ import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePWA } from 'vite-plugin-pwa';
 import app from './app.json';
+import htmlPlugin from 'vite-plugin-html-config';
 
 dotenv.config();
 
@@ -82,7 +83,55 @@ export default defineConfig({
         icons,
       },
     }),
-    ,
     svgr(),
+    htmlPlugin({
+      title: app.title,
+      metas: [
+        {
+          name: 'description',
+          content: app.description,
+        },
+        {
+          name: 'og:image',
+          content: '/facebook.jpg',
+        },
+        {
+          name: 'og:title',
+          content: app.title,
+        },
+        {
+          name: 'og:description',
+          content: app.description,
+        },
+        {
+          name: 'og:locale',
+          content: 'en_US',
+        },
+        {
+          name: 'og:type',
+          content: 'website',
+        },
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
+        {
+          name: 'twitter:creator',
+          content: '@nic_o_martin',
+        },
+        {
+          name: 'twitter:title',
+          content: app.title,
+        },
+        {
+          name: 'twitter:description',
+          content: app.description,
+        },
+        {
+          name: 'twitter:image',
+          content: '/twitter.jpg',
+        },
+      ],
+    }),
   ],
 });

@@ -1,3 +1,5 @@
+![Ask my PDF](https://pdf.nico.dev/twitter.jpg)
+
 # Ask my PDF
 
 A Webapp that uses Retrieval Augmented Generation (RAG) and Large Language Models to interact with a PDF directly in the browser.
