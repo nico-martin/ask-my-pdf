@@ -12,14 +12,16 @@ import gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
 const LLM_COOKIE = gemma2B.id + '-loaded';
 const showdownConverter = new showdown.Converter();
 
+const initLlmIsLoaded =
+  Cookies.get(LLM_COOKIE) === 'loaded' &&
+  Cookies.get('suppressLoaded') !== 'true';
+
 const ChatBox: React.FC<{
   className?: string;
 }> = ({ className = '' }) => {
   const { entries, llmResponse, results } = useRagContext();
   const { initialize } = useLlm();
-  const [llmLoaded, setLlmLoaded] = React.useState<boolean>(
-    Cookies.get(LLM_COOKIE) === 'loaded'
-  );
+  const [llmLoaded, setLlmLoaded] = React.useState<boolean>(initLlmIsLoaded);
 
   React.useEffect(() => {
     window.setTimeout(() => llmLoaded && initialize(), 200);
