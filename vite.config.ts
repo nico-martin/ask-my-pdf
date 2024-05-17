@@ -54,13 +54,17 @@ export default defineConfig({
       plugins: [postcssNesting, autoprefixer, postcssPresetEnv],
     },
   },
-  server: {
-    https: {
-      key: fs.readFileSync(process.env.SSL_KEY),
-      cert: fs.readFileSync(process.env.SSL_CRT),
-    },
-    port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
-  },
+  ...(fs.existsSync(process.env.SSL_KEY) && fs.existsSync(process.env.SSL_CRT)
+    ? {
+        server: {
+          https: {
+            key: fs.readFileSync(process.env.SSL_KEY),
+            cert: fs.readFileSync(process.env.SSL_CRT),
+          },
+          port: process.env.PORT ? parseInt(process.env.PORT) : 8080,
+        },
+      }
+    : {}),
   plugins: [
     react(),
     tsconfigPaths(),
