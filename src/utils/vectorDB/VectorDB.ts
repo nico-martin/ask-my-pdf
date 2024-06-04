@@ -31,7 +31,23 @@ class VectorDB<T = {}> {
   };
 
   public async addEntries(entries: Array<Entry<T>>): Promise<Array<Entry<T>>> {
-    const embeddings = await this.embedTexts(entries.map((entry) => entry.str));
+    const chunkSize = 500;
+    const chunks = [];
+    const numberOfChunks = Math.ceil(entries.length / chunkSize);
+    console.log(`adding ${entries.length} entries in ${numberOfChunks} chunks`);
+    for (let i = 0; i < entries.length; i += chunkSize) {
+      chunks.push(
+        await this.embedTexts(
+          entries.slice(i, i + chunkSize).map((entry) => entry.str)
+        )
+      );
+      console.log(`added chunk ${i / chunkSize + 1} of ${numberOfChunks}`);
+    }
+    /*const chunkEmbeddings = await Promise.all(
+      chunks.map((chunk) => this.embedTexts(chunk.map((entry) => entry.str)))
+    );*/
+    //const embeddings = await this.embedTexts(entries.map((entry) => entry.str));
+    const embeddings = chunks.flat();
     entries.map((entry, i) => {
       this.entries.push({
         str: entry.str,

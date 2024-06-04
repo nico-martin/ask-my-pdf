@@ -28,6 +28,7 @@ const Uploader: React.FC<{
         ref={inputRef}
         className={styles.input}
         type="file"
+        accept=".pdf"
         onChange={async (e) => {
           setLoading(true);
           await parsePdf(e.target.files[0]);

@@ -49,6 +49,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
         new Date().getTime() - startedVector.getTime()
       );
 
+      console.log('Entries:', entries.length);
       setEntries(entries);
       setPdfTitle(title);
     } catch (error) {
@@ -96,7 +97,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     let prompt = `These are parts of the ${pdfTitle}:\n\n`;
 
     foundEntries.forEach((result) => {
-      prompt += `"${result}}"`;
+      prompt += `"${result}"`;
       prompt += '\n\n';
     });
 
