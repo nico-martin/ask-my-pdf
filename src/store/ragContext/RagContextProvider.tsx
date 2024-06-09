@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Context from './ragContext';
-import getLinesFromPdf from '@utils/pdf/getLinesFromPdf.ts';
 import db, { VectorDBEntry } from '@store/db.ts';
 import { ActiveLines, Benchmarks } from '@store/ragContext/types.ts';
 import useLlm from '@store/llm/useLlm.ts';
+
+import PdfParserClass from '@utils/PdfParser/PdfParser.ts';
 
 const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -36,12 +37,27 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   const parsePdf = async (file: File) => {
     const started = new Date();
     try {
-      const { title, lines } = await getLinesFromPdf(file);
+      const parser = new PdfParserClass(file);
+      const { paragraphs, metadata } = await parser.parsePdf();
+      // @ts-ignore
+      const title = metadata.info.Title || file.name;
       setBenchmark('pdfParsedMillis', new Date().getTime() - started.getTime());
       const startedVector = new Date();
       db.clear();
       const entries = await db.addEntries(
-        lines.map((line) => ({ str: line.str, metadata: line.metadata }))
+        paragraphs.reduce(
+          (acc, paragraph) => [
+            ...acc,
+            ...paragraph.sentences.map((sentence) => ({
+              str: sentence.str,
+              metadata: {
+                index: sentence.index,
+                paragraphIndex: sentence.paragraphIndex,
+              },
+            })),
+          ],
+          []
+        )
       );
       setBenchmark('entriesVectorized', entries.length);
       setBenchmark(
@@ -69,24 +85,29 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     setBenchmark('searchDbCount', results.length);
     setResults(results);
 
-    const activeLines: Array<number> = [];
-    const fuzzyLines: Array<number> = [];
+    const activeLines: Array<string> = [];
+    const fuzzyLines: Array<string> = [];
 
     const foundEntries: Array<string> = [];
     results.map((result) => {
       let entry = '';
-      [...Array(7).keys()].forEach((i) => {
+      [...Array(5).keys()].forEach((i) => {
         const line = entries.find(
           (entry) =>
-            entry.metadata.allLinesNumber ===
-            result[0].metadata.allLinesNumber + (i - 3)
+            entry.metadata.paragraphIndex ===
+              result[0].metadata.paragraphIndex &&
+            entry.metadata.index === result[0].metadata.index + (i - 3)
         );
         if (line) {
-          entry += line.str;
+          entry += ' ' + line.str;
           if (i - 3 === 0) {
-            activeLines.push(line.metadata.allLinesNumber);
+            activeLines.push(
+              line.metadata.paragraphIndex + '-' + line.metadata.index
+            );
           } else {
-            fuzzyLines.push(line.metadata.allLinesNumber);
+            fuzzyLines.push(
+              line.metadata.paragraphIndex + '-' + line.metadata.index
+            );
           }
         }
       });

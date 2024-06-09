@@ -1,9 +1,8 @@
 import VectorDB, { Entry } from '@utils/vectorDB/VectorDB.ts';
 
 interface EntryMetadata {
-  pageNumber: number;
-  lineNumber: number;
-  allLinesNumber: number;
+  index: number;
+  paragraphIndex: number;
 }
 
 export type VectorDBEntry = Entry<EntryMetadata>;

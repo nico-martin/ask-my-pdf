@@ -8,6 +8,6 @@ export interface Benchmarks {
 }
 
 export interface ActiveLines {
-  exact: Array<number>;
-  fuzzy: Array<number>;
+  exact: Array<string>;
+  fuzzy: Array<string>;
 }

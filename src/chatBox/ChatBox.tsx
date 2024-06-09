@@ -64,11 +64,12 @@ const ChatBox: React.FC<{
                       <li className={styles.sourceEntry}>
                         <a
                           className={styles.sourceLink}
-                          href={`#L${result[0].metadata.allLinesNumber}`}
+                          href={`#L${result[0].metadata.paragraphIndex}-${result[0].metadata.index}`}
                         >
-                          Page {result[0].metadata.pageNumber}, Line{' '}
-                          {result[0].metadata.lineNumber} (
-                          {Math.round(result[1] * 100)}%)
+                          <span className={styles.sourceText}>
+                            {result[0].str}
+                          </span>{' '}
+                          ({Math.round(result[1] * 100)}%)
                         </a>
                       </li>
                     ))}

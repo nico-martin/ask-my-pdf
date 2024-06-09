@@ -2,6 +2,7 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import styles from './Document.module.css';
 import useRagContext from '@store/ragContext/useRagContext.ts';
+import { VectorDBEntry } from '@store/db.ts';
 
 const Document: React.FC<{
   className?: string;
@@ -28,7 +29,7 @@ const Document: React.FC<{
     const hashChange = () => {
       if (location.hash) {
         const hash = location.hash.slice(1).replace('L', '');
-        const el = document.querySelector(`[data-line-number="${hash}"]`);
+        const el = document.querySelector(`[data-sentence-key="${hash}"]`);
         if (el) {
           const rect = el.getBoundingClientRect();
           const top = rect.top + window.scrollY - window.innerHeight / 2;
@@ -42,6 +43,19 @@ const Document: React.FC<{
     window.addEventListener('hashchange', hashChange);
   }, []);
 
+  const groupedEntries = React.useMemo(() => {
+    return entries.reduce(
+      (acc: Record<number, Array<VectorDBEntry>>, entry) => ({
+        ...acc,
+        [entry.metadata.paragraphIndex]: [
+          ...(acc[entry.metadata.paragraphIndex] || []),
+          entry,
+        ],
+      }),
+      {}
+    );
+  }, []);
+
   return (
     <div className={cn(className, styles.root)}>
       <h2
@@ -52,25 +66,28 @@ const Document: React.FC<{
       >
         {defaultTitle}
       </h2>
-      {entries.map((line, i) => (
-        <p
-          data-line-number={line.metadata.allLinesNumber}
-          className={cn(styles.line, {
-            [styles.lineActive]: activeLines.fuzzy.includes(
-              line.metadata.allLinesNumber
-            ),
-            [styles.lineActiveExact]: activeLines.exact.includes(
-              line.metadata.allLinesNumber
-            ),
-          })}
-          key={i}
-        >
-          <span className={styles.lineNumber}>
-            {line.metadata.pageNumber}.{line.metadata.lineNumber}
-          </span>
-          {line.str}
-        </p>
-      ))}
+      <div className={styles.content}>
+        {Object.values(groupedEntries).map((entries) => (
+          <p className={styles.paragraph}>
+            {entries.map((entry) => {
+              const key = `${entry.metadata.paragraphIndex}-${entry.metadata.index}`;
+              return (
+                <span
+                  className={cn(styles.sentence, {
+                    [styles.sentenceActive]: activeLines.fuzzy.includes(key),
+                    [styles.sentenceActiveExact]:
+                      activeLines.exact.includes(key),
+                  })}
+                  data-sentence-key={key}
+                  key={key}
+                >
+                  {entry.str}
+                </span>
+              );
+            })}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

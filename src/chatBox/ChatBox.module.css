@@ -64,3 +64,12 @@
 .sourceLink {
   text-decoration: none;
 }
+
+.sourceText {
+  display: inline-block;
+  max-width: 50%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translateY(25%);
+}
