@@ -8,6 +8,8 @@
   border-radius: 0.5rem;
   position: relative;
   background-color: var(--c-yellow-light);
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .button {
@@ -24,4 +26,11 @@
 
 .input {
   display: none;
+}
+
+.info {
+  font-size: var(--fs-small);
+  max-width: 80%;
+  border: 4px dashed var(--c-yellow-dark);
+  padding: var(--space);
 }

@@ -35,6 +35,11 @@ const Uploader: React.FC<{
           setLoading(false);
         }}
       />
+      <p className={styles.info}>
+        "Ask my PDF" works best with long sections of text. If the document
+        contains graphics or tables, the information may not be correctly
+        recognized and assigned to the question.
+      </p>
     </div>
   );
 };
