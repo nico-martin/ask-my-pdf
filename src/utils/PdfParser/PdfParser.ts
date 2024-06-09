@@ -107,7 +107,10 @@ class PdfParser {
         items.map((item) => item.str).join(' ');
 
       const string = lines.reduce(
-        (acc, line) => acc + ' ' + concat(line.items),
+        (acc, line) =>
+          acc.endsWith('-')
+            ? acc.slice(0, -1) + concat(line.items)
+            : acc + ' ' + concat(line.items),
         ''
       );
 

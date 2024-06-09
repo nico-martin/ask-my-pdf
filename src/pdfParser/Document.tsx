@@ -67,8 +67,8 @@ const Document: React.FC<{
         {defaultTitle}
       </h2>
       <div className={styles.content}>
-        {Object.values(groupedEntries).map((entries) => (
-          <p className={styles.paragraph}>
+        {Object.values(groupedEntries).map((entries, i) => (
+          <p className={styles.paragraph} key={i}>
             {entries.map((entry) => {
               const key = `${entry.metadata.paragraphIndex}-${entry.metadata.index}`;
               return (

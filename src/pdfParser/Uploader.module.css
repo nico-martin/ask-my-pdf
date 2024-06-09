@@ -30,7 +30,15 @@
 
 .info {
   font-size: var(--fs-small);
-  max-width: 80%;
+  width: 80%;
   border: 4px dashed var(--c-yellow-dark);
   padding: var(--space);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.process {
+  display: block;
+  text-align: center;
 }

@@ -34,7 +34,10 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   const setBenchmark = (key: keyof Benchmarks, value: number) =>
     setBenchmarks((benchmarks) => ({ ...benchmarks, [key]: value }));
 
-  const parsePdf = async (file: File) => {
+  const parsePdf = async (
+    file: File,
+    callback: (processed: number, total: number) => void = null
+  ) => {
     const started = new Date();
     try {
       const parser = new PdfParserClass(file);
@@ -57,7 +60,8 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
             })),
           ],
           []
-        )
+        ),
+        callback
       );
       setBenchmark('entriesVectorized', entries.length);
       setBenchmark(

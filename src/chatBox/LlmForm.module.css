@@ -18,6 +18,7 @@
   transition: all 0.1s ease-in;
   outline: none;
   margin-top: 1rem;
+  height: 9rem;
 
   &:hover,
   &:focus {

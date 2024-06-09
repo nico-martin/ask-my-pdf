@@ -5,7 +5,10 @@ import { VectorDBEntry } from '@store/db.ts';
 export interface RagContext {
   pdfTitle: string;
   setPdfTitle: (title: string) => void;
-  parsePdf: (file: File) => Promise<void>;
+  parsePdf: (
+    file: File,
+    callback?: (processed: number, total: number) => void
+  ) => Promise<void>;
   benchmarks: Benchmarks;
   entries: Array<VectorDBEntry>;
   prompt: string;
@@ -18,7 +21,10 @@ export interface RagContext {
 const ragContext = React.createContext<RagContext>({
   pdfTitle: '',
   setPdfTitle: (_title: string) => {},
-  parsePdf: async (_file: File) => {},
+  parsePdf: async (
+    _file: File,
+    _callback: (processed: number, total: number) => void
+  ) => {},
   benchmarks: {
     pdfParsedMillis: 0,
     entriesVectorized: 0,
