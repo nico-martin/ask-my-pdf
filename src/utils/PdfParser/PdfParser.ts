@@ -33,10 +33,7 @@ class PdfParser {
 
       for (const item of textContent.items) {
         const textItem = item as unknown as PdfJSTextItem;
-        if (
-          stringsToIgnore.includes(textItem.str) ||
-          textItem.str.length <= 1
-        ) {
+        if (stringsToIgnore.includes(textItem.str)) {
           continue;
         }
         const position = {
@@ -104,13 +101,23 @@ class PdfParser {
 
     return groupedLines.map((lines, i) => {
       const concat = (items: Array<PdfItem>) =>
-        items.map((item) => item.str).join(' ');
+        items.reduce(
+          (acc, item) =>
+            !acc
+              ? item.str
+              : item.str === '-'
+                ? acc + item.str
+                : acc + ' ' + item.str,
+          ''
+        );
 
       const string = lines.reduce(
         (acc, line) =>
-          acc.endsWith('-')
-            ? acc.slice(0, -1) + concat(line.items)
-            : acc + ' ' + concat(line.items),
+          acc.endsWith('- ')
+            ? acc.slice(0, -2) + concat(line.items)
+            : acc.endsWith('-')
+              ? acc.slice(0, -1) + concat(line.items)
+              : acc + ' ' + concat(line.items),
         ''
       );
 
