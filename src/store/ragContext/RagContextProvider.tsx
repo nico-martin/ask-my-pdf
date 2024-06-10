@@ -7,6 +7,21 @@ import useLlm from '@store/llm/useLlm.ts';
 
 import PdfParserClass from '@utils/PdfParser/PdfParser.ts';
 
+const TEMPLATE = `INSTRUCTIONS:
+DOCUMENT contains parts of the {documentTitle}
+Answer the users QUESTION using the DOCUMENT text below.
+Keep your answer ground in the facts of the DOCUMENT.
+If the DOCUMENT doesn’t contain the facts to answer the QUESTION return {NONE}
+Answer in Markdown format\`
+
+DOCUMENT:
+{results}
+
+QUESTION:
+{question}`;
+
+const INCLUDE_N_RESULTS_BEFORE_AND_AFTER = 5;
+
 const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   children,
 }) => {
@@ -95,39 +110,38 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     const foundEntries: Array<string> = [];
     results.map((result) => {
       let entry = '';
-      [...Array(5).keys()].forEach((i) => {
-        const line = entries.find(
-          (entry) =>
-            entry.metadata.paragraphIndex ===
-              result[0].metadata.paragraphIndex &&
-            entry.metadata.index === result[0].metadata.index + (i - 3)
-        );
-        if (line) {
-          entry += ' ' + line.str;
-          if (i - 3 === 0) {
-            activeLines.push(
-              line.metadata.paragraphIndex + '-' + line.metadata.index
-            );
-          } else {
-            fuzzyLines.push(
-              line.metadata.paragraphIndex + '-' + line.metadata.index
-            );
+      [...Array(INCLUDE_N_RESULTS_BEFORE_AND_AFTER * 2 + 1).keys()].forEach(
+        (i) => {
+          const line = entries.find(
+            (entry) =>
+              entry.metadata.paragraphIndex ===
+                result[0].metadata.paragraphIndex &&
+              entry.metadata.index === result[0].metadata.index + (i - 3)
+          );
+          if (line) {
+            entry += ' ' + line.str;
+            if (i - 3 === 0) {
+              activeLines.push(
+                line.metadata.paragraphIndex + '-' + line.metadata.index
+              );
+            } else {
+              fuzzyLines.push(
+                line.metadata.paragraphIndex + '-' + line.metadata.index
+              );
+            }
           }
         }
-      });
+      );
       foundEntries.push(entry);
     });
     setActiveLines({ exact: activeLines, fuzzy: fuzzyLines });
 
-    let prompt = `These are parts of the ${pdfTitle}:\n\n`;
-
-    foundEntries.forEach((result) => {
-      prompt += `"${result}"`;
-      prompt += '\n\n';
-    });
-
-    prompt += query;
-    prompt += '\n\nAnswer in Markdown format.';
+    const prompt = TEMPLATE.replace('{documentTitle}', pdfTitle)
+      .replace(
+        '{results}',
+        foundEntries.map((result) => `"${result}"`).join('\n\n')
+      )
+      .replace('{question}', query);
 
     setPrompt(prompt);
 
