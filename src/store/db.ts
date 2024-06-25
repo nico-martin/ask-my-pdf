@@ -1,4 +1,7 @@
-import VectorDB, { Entry } from '@utils/vectorDB/VectorDB.ts';
+import VectorDB, {
+  Entry,
+  FeatureExtractionModel,
+} from '@utils/vectorDB/VectorDB.ts';
 
 interface EntryMetadata {
   index: number;
@@ -6,6 +9,8 @@ interface EntryMetadata {
 }
 
 export type VectorDBEntry = Entry<EntryMetadata>;
+
+export type Model = FeatureExtractionModel;
 
 const db = new VectorDB<EntryMetadata>();
 

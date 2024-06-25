@@ -11,23 +11,29 @@ export interface VectorizedEntry<T> extends Entry<T> {
   vectorMagnitude: number;
 }
 
+export enum FeatureExtractionModel {
+  ALL_MINILM_L6_V2 = 'Xenova/all-MiniLM-L6-v2',
+  ALL_MPNET_BASE_V2 = 'Xenova/all-mpnet-base-v2',
+  MIXEDBREAD_AI_EMBED_LARGE_V1 = 'mixedbread-ai/mxbai-embed-large-v1',
+  PARAPHRASE_MULTILINGUAL_MINILM_L12_V2 = 'Xenova/paraphrase-multilingual-MiniLM-L12-v2',
+}
+
 class VectorDB<T = {}> {
   public entries: Array<VectorizedEntry<T>> = [];
   private extractor: FeatureExtractionPipeline = null;
+  private model: FeatureExtractionModel =
+    FeatureExtractionModel.ALL_MINILM_L6_V2;
 
-  public constructor() {
-    this.loadExtractor();
+  public async setModel(model: FeatureExtractionModel): Promise<void> {
+    this.model = model;
+    await this.loadExtractor();
   }
 
   private loadExtractor = async () => {
-    this.extractor = await pipeline(
-      'feature-extraction',
-      'Xenova/all-MiniLM-L6-v2',
-      {
-        device: 'webgpu',
-        dtype: 'fp32',
-      }
-    );
+    this.extractor = await pipeline('feature-extraction', this.model, {
+      device: 'webgpu',
+      dtype: 'fp32',
+    });
   };
 
   public async addEntries(

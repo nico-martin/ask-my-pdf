@@ -8,6 +8,7 @@ import styles from './App.module.css';
 import RagContextProvider from '@store/ragContext/RagContextProvider.tsx';
 
 import { version } from '../package.json';
+import SettingsContextProvider from '@store/settings/SettingsContextProvider.tsx';
 const root = document.getElementById('app');
 
 const App: React.FC = () => (
@@ -30,9 +31,11 @@ const App: React.FC = () => (
 
 root &&
   ReactDOM.createRoot(root).render(
-    <LlmContextProvider>
-      <RagContextProvider>
-        <App />
-      </RagContextProvider>
-    </LlmContextProvider>
+    <SettingsContextProvider>
+      <LlmContextProvider>
+        <RagContextProvider>
+          <App />
+        </RagContextProvider>
+      </LlmContextProvider>
+    </SettingsContextProvider>
   );

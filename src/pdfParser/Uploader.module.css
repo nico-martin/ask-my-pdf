@@ -38,6 +38,17 @@
   justify-content: center;
 }
 
+.modelLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.modelLoadingIcon {
+  scale: 1.2;
+}
+
 .process {
   display: block;
   text-align: center;

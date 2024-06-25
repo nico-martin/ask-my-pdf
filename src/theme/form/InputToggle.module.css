@@ -1,0 +1,47 @@
+.wrapper {
+  --input-toggle-size: 1.8rem;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+}
+
+.track,
+.thumb {
+  display: inline-block;
+  height: var(--input-toggle-size);
+  width: calc(var(--input-toggle-size) * 1.8);
+  border: 2px solid currentColor;
+  border-radius: 10rem;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.track {
+  position: relative;
+  transition: background-color 0.1s ease-in;
+  scale: 0.9;
+}
+
+.thumb {
+  position: absolute;
+  left: -1.5px;
+  top: -1.9px;
+  width: var(--input-toggle-size);
+  border-width: 3px;
+  transition:
+    transform 0.1s ease-in,
+    background-color 0.1s ease-in;
+  scale: 1.1;
+}
+
+input:checked + .track {
+  background-color: var(--c-green);
+
+  .thumb {
+    transform: translateX(70%);
+  }
+}

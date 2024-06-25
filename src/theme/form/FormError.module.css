@@ -1,0 +1,6 @@
+.root {
+  text-align: right;
+  color: var(--c-red);
+  font-size: var(--fs-small);
+  margin-top: 1em;
+}

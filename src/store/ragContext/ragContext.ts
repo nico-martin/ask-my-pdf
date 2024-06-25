@@ -16,6 +16,7 @@ export interface RagContext {
   processQuery: (query: string) => Promise<void>;
   results: Array<[VectorDBEntry, number]>;
   activeLines: ActiveLines;
+  modelLoading: boolean;
 }
 
 const ragContext = React.createContext<RagContext>({
@@ -42,6 +43,7 @@ const ragContext = React.createContext<RagContext>({
     exact: [],
     fuzzy: [],
   },
+  modelLoading: false,
 });
 
 export default ragContext;

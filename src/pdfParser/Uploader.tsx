@@ -2,7 +2,7 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 
 import styles from './Uploader.module.css';
-import { Button, IconName } from '@theme';
+import { Button, Icon, IconName } from '@theme';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 
 const Uploader: React.FC<{
@@ -15,7 +15,7 @@ const Uploader: React.FC<{
     total: number;
   }>({ processed: 0, total: 0 });
   const infosRef = React.useRef<HTMLDivElement>(null);
-  const { parsePdf } = useRagContext();
+  const { parsePdf, modelLoading } = useRagContext();
 
   React.useEffect(() => {
     if (infosRef?.current) {
@@ -26,6 +26,7 @@ const Uploader: React.FC<{
   return (
     <div className={cn(className, styles.root)}>
       <Button
+        disabled={modelLoading}
         className={styles.button}
         classNameIconWrapper={styles.buttonIconWrapper}
         onClick={() => {
@@ -50,7 +51,16 @@ const Uploader: React.FC<{
         }}
       />
       <p className={styles.info} ref={infosRef}>
-        {loading ? (
+        {modelLoading ? (
+          <div className={styles.modelLoading}>
+            <Icon
+              className={styles.modelLoadingIcon}
+              icon={IconName.LOADING}
+              spinning
+            />
+            <span>model loading...</span>
+          </div>
+        ) : loading ? (
           processing.total > 0 ? (
             <span className={styles.process}>
               Preparing the vectorDB (

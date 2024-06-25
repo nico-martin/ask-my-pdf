@@ -1,0 +1,62 @@
+.root {
+  position: relative;
+  width: 1em;
+  height: 100%;
+}
+
+/*
+.spanInput,
+.input {
+  position: absolute;
+  left: 0;
+}*/
+
+.input {
+  position: absolute;
+  opacity: 0;
+}
+
+.input:focus .spanInput {
+  border-color: var(--c-border-dark);
+  outline: 1px solid var(--c-primary);
+}
+
+.spanInput {
+  display: block;
+  position: relative;
+  width: 1.3em !important;
+  height: 1.3em !important;
+  align-self: center;
+  padding: 0 !important;
+  cursor: pointer;
+  //background-color: var(--c-form-bkg);
+  z-index: 2;
+  border: 1px solid var(--c-border);
+  border-radius: var(--border-radius-card);
+  @mixin transition background-color;
+
+  &:focus {
+    border-color: var(--c-border-dark);
+    outline: 1px solid var(--c-primary);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 60%;
+    bottom: 0;
+    left: 45%;
+    top: -0.1em;
+    border-bottom: 0.3em solid var(--c-blue-dark);
+    border-right: 0.3em solid var(--c-blue-dark);
+    transform: translateX(-45%) scale(0.7) rotate(45deg);
+    opacity: 0;
+    transition: 100ms opacity ease-in;
+  }
+
+  &.isActive {
+    &::before {
+      opacity: 1;
+    }
+  }
+}
