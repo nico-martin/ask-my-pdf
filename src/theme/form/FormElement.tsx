@@ -6,6 +6,7 @@ import InputSelect, { InputSelectProps } from './InputSelect.tsx';
 import { FormElementProps, InputProps, InputType } from './types.ts';
 import InputRange, { InputRangeProps } from './InputRange.tsx';
 import InputToggle, { InputToggleProps } from './InputToggle.tsx';
+import InputTextarea, { InputTextareaProps } from './InputTextarea.tsx';
 
 const FormElement = <T,>({
   form,
@@ -53,7 +54,12 @@ const FormElement = <T,>({
         {Description && <div className={styles.description}>{Description}</div>}
       </div>
       <div className={styles.content}>
-        {input === InputType.SELECT ? (
+        {input === InputType.TEXTAREA ? (
+          <InputTextarea
+            {...inputBaseProps}
+            {...(inputProps as InputTextareaProps<T>)}
+          />
+        ) : input === InputType.SELECT ? (
           <InputSelect
             {...inputBaseProps}
             {...(inputProps as InputSelectProps<T>)}

@@ -18,6 +18,7 @@ export interface Settings {
   promptTemplate: string;
   model: FeatureExtractionModel;
   resultsBeforeAndAfter: number;
+  maxNumberOfResults: number;
   similarityThreshold: Range<0, 101>;
 }
 

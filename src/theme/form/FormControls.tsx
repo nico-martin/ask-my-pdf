@@ -26,7 +26,7 @@ const FormControls = React.forwardRef<
     {
       value = 'Submit',
       className = '',
-      align = ButtonGroupAlign.LEFT,
+      align = ButtonGroupAlign.RIGHT,
       loading = false,
       resetText = 'Reset',
       resetFunction = null,

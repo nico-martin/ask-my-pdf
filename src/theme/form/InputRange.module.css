@@ -1,5 +1,6 @@
 .wrapper {
   display: flex;
+  flex-direction: row-reverse;
   gap: 1em;
 }
 

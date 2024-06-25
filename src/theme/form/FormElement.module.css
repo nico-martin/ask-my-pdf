@@ -30,8 +30,17 @@
   color: #676767;
   margin-top: 0.2em;
 
-  p {
+  p,
+  li {
     font-size: 0.8em;
+  }
+
+  ul {
+    padding-left: 1em;
+  }
+
+  & > * + * {
+    margin-top: 0.5em;
   }
 }
 

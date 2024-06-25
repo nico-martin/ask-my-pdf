@@ -10,6 +10,7 @@ import { InputTextProps } from './InputText.tsx';
 import { InputSelectProps } from './InputSelect.tsx';
 import { InputRangeProps } from './InputRange.tsx';
 import { InputToggleProps } from './InputToggle.tsx';
+import { InputTextareaProps } from './InputTextarea.tsx';
 
 export interface InputBaseProps<T> {
   name: Path<T>;
@@ -27,6 +28,7 @@ export type InputProps<T> = Omit<ControllerRenderProps<T>, 'onBlur'> &
 
 export enum InputType {
   TEXT = 'text',
+  TEXTAREA = 'textarea',
   SELECT = 'select',
   RANGE = 'range',
   TOGGLE = 'toggle',
@@ -53,6 +55,12 @@ interface FormElementInputTextProps<T>
   input: InputType.TEXT;
 }
 
+interface FormElementInputTextareaProps<T>
+  extends FormElementBaseProps<T>,
+    InputTextareaProps<T> {
+  input: InputType.TEXTAREA;
+}
+
 interface FormElementInputSelectProps<T>
   extends FormElementBaseProps<T>,
     InputSelectProps<T> {
@@ -72,6 +80,7 @@ interface FormElementInputToggleProps<T>
 }
 
 export type FormElementProps<T> =
+  | FormElementInputTextareaProps<T>
   | FormElementInputTextProps<T>
   | FormElementInputSelectProps<T>
   | FormElementInputRangeProps<T>

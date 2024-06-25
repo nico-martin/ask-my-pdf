@@ -14,7 +14,8 @@ DOCUMENT:
 
 QUESTION:
 {question}`,
-  resultsBeforeAndAfter: 5,
-  similarityThreshold: 10,
+  resultsBeforeAndAfter: 3,
+  maxNumberOfResults: 5,
+  similarityThreshold: 60,
   model: FeatureExtractionModel.ALL_MINILM_L6_V2,
 };
