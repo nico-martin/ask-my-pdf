@@ -5,11 +5,15 @@ import cn from '@utils/classnames.ts';
 
 interface Props {
   value?: string;
+  submitIcon?: IconName;
+  submitClassNameIconWrapper?: string;
+  submitDisabled?: boolean;
   className?: string;
   align?: ButtonGroupAlign;
   loading?: boolean;
   resetText?: string;
   resetFunction?: () => void;
+  resetDisabled?: boolean;
   customSubmit?: {
     text: string;
     icon: IconName;
@@ -18,26 +22,35 @@ interface Props {
   [key: string]: any;
 }
 
-const FormControls = React.forwardRef<
+const FormControls: React.ForwardRefExoticComponent<Props> = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   Props
 >(
   (
     {
       value = 'Submit',
+      submitIcon = null,
+      submitClassNameIconWrapper = '',
+      submitDisabled = false,
       className = '',
       align = ButtonGroupAlign.RIGHT,
       loading = false,
       resetText = 'Reset',
       resetFunction = null,
+      resetDisabled = false,
       customSubmit = null,
       ...buttonProps
     },
     ref
   ) => (
     <ButtonGroup align={align} className={cn(styles.controls, className)}>
-      {resetFunction && align === 'right' && (
-        <Button onClick={resetFunction} appearance="none" type="button">
+      {resetFunction && (
+        <Button
+          onClick={resetFunction}
+          appearance="none"
+          type="button"
+          disabled={resetDisabled}
+        >
           {resetText}
         </Button>
       )}
@@ -51,13 +64,16 @@ const FormControls = React.forwardRef<
           {customSubmit.text}
         </Button>
       ) : (
-        <Button {...buttonProps} loading={loading} type="submit" ref={ref}>
+        <Button
+          {...buttonProps}
+          loading={loading}
+          type="submit"
+          ref={ref}
+          icon={submitIcon}
+          disabled={submitDisabled}
+          classNameIconWrapper={submitClassNameIconWrapper}
+        >
           {value}
-        </Button>
-      )}
-      {resetFunction && align !== 'right' && (
-        <Button onClick={resetFunction} appearance="none" type="button">
-          {resetText}
         </Button>
       )}
     </ButtonGroup>

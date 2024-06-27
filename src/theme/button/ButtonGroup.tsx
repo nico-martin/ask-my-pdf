@@ -6,6 +6,7 @@ export enum ButtonGroupAlign {
   LEFT = 'left',
   CENTER = 'center',
   RIGHT = 'right',
+  SPACE_BETWEEN = 'space-between',
 }
 
 const ButtonGroup: React.FC<{
@@ -21,7 +22,9 @@ const ButtonGroup: React.FC<{
         ? styles.alignRight
         : align === ButtonGroupAlign.CENTER
           ? styles.alignCenter
-          : styles.alignLeft
+          : align === ButtonGroupAlign.SPACE_BETWEEN
+            ? styles.alignSpaceBetween
+            : styles.alignLeft
     )}
   >
     {children}

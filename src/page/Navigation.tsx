@@ -3,10 +3,12 @@ import cn from '@utils/classnames.ts';
 import styles from './Navigation.module.css';
 import { Button, IconName, Modal } from '@theme';
 import gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
+import useSettingsContext from '@store/settings/useSettingsContext.ts';
 
 const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [aboutModal, setAboutModal] = React.useState<boolean>(false);
   const [legalModal, setLegalModal] = React.useState<boolean>(false);
+  const { setShowModal } = useSettingsContext();
   return (
     <nav className={cn(className, styles.root)}>
       <span className={styles.title}>Ask my PDF</span>
@@ -16,13 +18,21 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
       <button className={styles.legal} onClick={() => setLegalModal(true)}>
         Legal
       </button>
-      <Button
+      <a
         className={styles.github}
-        icon={IconName.GITHUB}
         href="https://github.com/nico-martin/ask-my-pdf"
         target="_blank"
       >
-        It's Open Source!
+        GitHub
+      </a>
+      <Button
+        className={styles.settings}
+        icon={IconName.COG_OUTLINE}
+        //href="https://github.com/nico-martin/ask-my-pdf"
+        //target="_blank"
+        onClick={() => setShowModal(true)}
+      >
+        Settings
       </Button>
       {aboutModal && (
         <Modal close={() => setAboutModal(false)} title="About">

@@ -1,17 +1,34 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Form, FormControls, FormElement, InputType } from '@theme';
+import {
+  Form,
+  FormControls,
+  FormElement,
+  IconName,
+  InputType,
+  ButtonGroupAlign,
+} from '@theme';
 import { Settings } from '@store/settings/settingsContext.ts';
-import { INITIAL_SETTINGS } from '@store/settings/constants.ts';
 import { FeatureExtractionModel } from '@utils/vectorDB/VectorDB.ts';
+import styles from './SettingsForm.module.css';
+import { INITIAL_SETTINGS } from '@store/settings/constants.ts';
 
-const SettingsForm: React.FC = () => {
+const SettingsForm: React.FC<{
+  defaultValues: Settings;
+  setValues: (data: Settings) => void;
+}> = ({ defaultValues, setValues }) => {
   const form = useForm<Settings>({
-    defaultValues: INITIAL_SETTINGS,
+    defaultValues,
   });
+  const formValues = form.watch();
+
+  const submitDisabled =
+    JSON.stringify(formValues) === JSON.stringify(defaultValues);
+  const resetDisabled =
+    JSON.stringify(defaultValues) === JSON.stringify(INITIAL_SETTINGS);
 
   return (
-    <Form onSubmit={form.handleSubmit((data) => console.log(data))}>
+    <Form onSubmit={form.handleSubmit(setValues)}>
       <FormElement<Settings>
         form={form}
         label="Prompt Template"
@@ -30,7 +47,7 @@ const SettingsForm: React.FC = () => {
             </ul>
           </React.Fragment>
         }
-        rows={13}
+        rows={8}
       />
       <FormElement<Settings>
         form={form}
@@ -74,8 +91,28 @@ const SettingsForm: React.FC = () => {
         name="model"
         input={InputType.SELECT}
         options={FeatureExtractionModel}
+        Description={
+          <p>
+            If the model is changed, the document is re-indexed. This can take a
+            while.
+          </p>
+        }
       />
-      <FormControls />
+      <FormControls
+        value="Save Settings"
+        submitIcon={IconName.CONTENT_SAVE_OUTLINE}
+        submitClassNameIconWrapper={styles.buttonIconWrapper}
+        resetFunction={() => {
+          Object.entries(INITIAL_SETTINGS).map(([key, value]) =>
+            form.setValue(key as keyof Settings, value)
+          );
+          setValues(INITIAL_SETTINGS);
+        }}
+        resetText="Reset to Default"
+        resetDisabled={resetDisabled}
+        align={ButtonGroupAlign.SPACE_BETWEEN}
+        submitDisabled={submitDisabled}
+      />
     </Form>
   );
 };

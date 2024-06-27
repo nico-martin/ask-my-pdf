@@ -1,3 +1,5 @@
 .controls {
   margin-top: calc(var(--space) * 2);
+  border-top: 4px solid var(--c-border);
+  padding-top: var(--space-grid);
 }

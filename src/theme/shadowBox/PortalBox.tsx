@@ -4,9 +4,9 @@ import { default as ShadowBox, ShadowBoxPropsI } from './ShadowBox';
 
 export interface PortalBoxPropsI extends ShadowBoxPropsI {}
 
-const Portal: React.FC<{ children?: JSX.Element | JSX.Element[] | string }> = ({
-  children,
-}) => {
+const Portal: React.FC<{
+  children?: React.ReactElement | React.ReactElement[] | string;
+}> = ({ children }) => {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => {
     setMounted(true);

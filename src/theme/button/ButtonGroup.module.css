@@ -19,3 +19,7 @@
 .alignRight {
   justify-content: flex-end;
 }
+
+.alignSpaceBetween {
+  justify-content: space-between;
+}

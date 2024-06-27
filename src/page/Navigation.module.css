@@ -15,7 +15,7 @@
   font-weight: 900;
 }
 
-.github {
+.settings {
   font-size: 0.8rem;
 }
 
@@ -26,4 +26,9 @@
 
 .legal {
   cursor: pointer;
+}
+
+.github {
+  cursor: pointer;
+  text-decoration: none;
 }

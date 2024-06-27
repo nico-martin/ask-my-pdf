@@ -25,11 +25,13 @@ export interface Settings {
 export interface SettingsContext {
   settings: Settings;
   setSettings: (settings: Partial<Settings>) => void;
+  setShowModal: (show: boolean) => void;
 }
 
 const settingsContext = React.createContext<SettingsContext>({
   settings: INITIAL_SETTINGS,
   setSettings: (_settings: Partial<Settings>) => {},
+  setShowModal: () => {},
 });
 
 export default settingsContext;
