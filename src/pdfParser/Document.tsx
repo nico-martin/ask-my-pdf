@@ -59,6 +59,7 @@ const Document: React.FC<{
   return (
     <div className={cn(className, styles.root)}>
       <h2
+        suppressContentEditableWarning={true}
         ref={ref}
         onKeyUp={(e) => setPdfTitle((e.target as HTMLElement).innerText)}
         contentEditable

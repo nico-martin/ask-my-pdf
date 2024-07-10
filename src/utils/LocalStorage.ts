@@ -4,7 +4,7 @@ class LocalStorage<T = Record<string, any>> {
   private readonly key: string;
 
   constructor(key: string) {
-    this.storage = window.sessionStorage;
+    this.storage = window.localStorage;
     if (LocalStorage.usedKeys.has(key)) {
       throw new Error(`The key "${key}" has already been used.`);
     }

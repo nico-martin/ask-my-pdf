@@ -15,6 +15,13 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   const { generate } = useLlm();
   const [entries, setEntries] = React.useState<Array<VectorDBEntry>>([]);
   const [pdfTitle, setPdfTitle] = React.useState<string>('');
+  const [file, setFile] = React.useState<File>(null);
+  const [entriesProcessingLoading, setEntriesProcessingLoading] =
+    React.useState<boolean>(false);
+  const [entriesProcessing, setEntriesProcessing] = React.useState<{
+    processed: number;
+    total: number;
+  }>({ processed: 0, total: 0 });
   const [benchmarks, setBenchmarks] = React.useState<Benchmarks>({
     pdfParsedMillis: 0,
     entriesVectorized: 0,
@@ -29,6 +36,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     []
   );
   const [modelLoading, setModelLoading] = React.useState<boolean>(false);
+  const [modelError, setModelError] = React.useState<string>(null);
   const [activeLines, setActiveLines] = React.useState<ActiveLines>({
     exact: [],
     fuzzy: [],
@@ -36,21 +44,46 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   const activeModel = React.useRef<FeatureExtractionModel>(null);
   const { settings } = useSettingsContext();
 
+  const resetChat = () => {
+    setLlmResponse('');
+    setPrompt('');
+    setActiveLines({ exact: [], fuzzy: [] });
+    setBenchmarks({
+      pdfParsedMillis: 0,
+      entriesVectorized: 0,
+      entriesVectorizedMillis: 0,
+      searchDbCount: 0,
+      searchDbMillis: 0,
+      generatedMillis: 0,
+    });
+  };
+
   React.useEffect(() => {
-    if (activeModel?.current === settings.model) return;
-    activeModel.current = settings.model;
+    setModelError(null);
+    if (activeModel?.current === settings.featureExtractionModel) return;
+    activeModel.current = settings.featureExtractionModel;
     setModelLoading(true);
-    db.setModel(settings.model).then(() => setModelLoading(false));
-  }, [settings.model]);
+    resetChat();
+    db.setModel(settings.featureExtractionModel)
+      .then(() => {
+        setModelLoading(false);
+        file && parsePdf(file);
+      })
+      .catch((e) => {
+        setModelLoading(false);
+        setModelError(e.toString());
+      });
+  }, [settings.featureExtractionModel]);
 
   const setBenchmark = (key: keyof Benchmarks, value: number) =>
     setBenchmarks((benchmarks) => ({ ...benchmarks, [key]: value }));
 
-  const parsePdf = async (
-    file: File,
-    callback: (processed: number, total: number) => void = null
-  ) => {
+  const parsePdf = async (file: File) => {
     const started = new Date();
+    setEntries([]);
+    setPdfTitle('');
+    setEntriesProcessingLoading(true);
+    setEntriesProcessing({ processed: 0, total: 0 });
     try {
       const parser = new PdfParserClass(file);
       const { paragraphs, metadata } = await parser.parsePdf();
@@ -73,7 +106,8 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
           ],
           []
         ),
-        callback
+        (processed: number, total: number) =>
+          setEntriesProcessing({ processed, total })
       );
       setBenchmark('entriesVectorized', entries.length);
       setBenchmark(
@@ -81,10 +115,12 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
         new Date().getTime() - startedVector.getTime()
       );
 
-      console.log('Entries:', entries.length);
       setEntries(entries);
       setPdfTitle(title);
+      setFile(file);
+      setEntriesProcessingLoading(false);
     } catch (error) {
+      setEntriesProcessingLoading(false);
       console.error(error);
       alert('Error parsing PDF');
       return;
@@ -136,8 +172,6 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     });
     setActiveLines({ exact: activeLines, fuzzy: fuzzyLines });
 
-    console.log({ exact: activeLines, fuzzy: fuzzyLines });
-
     const prompt = settings.promptTemplate
       .replace('{documentTitle}', pdfTitle)
       .replace(
@@ -163,6 +197,8 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
         pdfTitle,
         setPdfTitle,
         parsePdf,
+        entriesProcessing,
+        entriesProcessingLoading,
         benchmarks,
         entries,
         prompt,
@@ -171,6 +207,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
         results,
         activeLines,
         modelLoading,
+        modelError,
       }}
     >
       {children}

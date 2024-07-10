@@ -64,6 +64,10 @@ class PdfParser {
         lineOnPageNumber = 0;
       }
 
+      if (item.str === '●') {
+        item.str = '';
+      }
+
       if (y !== activeY) {
         activeY = y;
         acc.push({
@@ -89,7 +93,7 @@ class PdfParser {
         const prevHeight = prevLine?.items[0].height || 0;
 
         const distanceToPrevLine = prevPositionY - positionY;
-        if (height === prevHeight && distanceToPrevLine < height * 1.6) {
+        if (height === prevHeight && distanceToPrevLine < height * 2) {
           acc[acc.length - 1].push(line);
         } else {
           acc.push([line]);

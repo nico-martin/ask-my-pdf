@@ -17,5 +17,5 @@ QUESTION:
   resultsBeforeAndAfter: 3,
   maxNumberOfResults: 5,
   similarityThreshold: 60,
-  model: FeatureExtractionModel.ALL_MINILM_L6_V2,
+  featureExtractionModel: FeatureExtractionModel.ALL_MINILM_L6_V2,
 };

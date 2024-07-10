@@ -89,9 +89,14 @@ const SettingsForm: React.FC<{
       <FormElement<Settings>
         form={form}
         label="Embedding Model"
-        name="model"
+        name="featureExtractionModel"
         input={InputType.SELECT}
-        options={FeatureExtractionModel}
+        options={
+          Object.values(FeatureExtractionModel).reduce(
+            (acc, curr) => ({ ...acc, [curr]: curr }),
+            {}
+          ) as Record<string, string>
+        }
         Description={
           <p>
             If the model is changed, the document is re-indexed. This can take a

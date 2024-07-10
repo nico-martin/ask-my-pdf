@@ -19,9 +19,9 @@ const SVG = ({
   );
 
   return LoadedIcon ? (
-    <figure className={cn(className)} {...props}>
+    <span className={cn(className)} {...props}>
       <LoadedIcon />
-    </figure>
+    </span>
   ) : null;
 };
 
