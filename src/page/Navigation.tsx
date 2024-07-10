@@ -51,7 +51,7 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
               PDF.js
             </a>{' '}
             to process a PDF locally and split the content up into separate
-            lines.
+            paragraphs and sentences.
           </p>
           <h3>2. Vector Search</h3>
           <p>
@@ -67,7 +67,8 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
             <a href="https://github.com/xenova/transformers.js" target="_blank">
               TransformersJS
             </a>
-            . Those entries are then stored in an in-memory{' '}
+            . Other models can be selected in the settings. Those entries are
+            then stored in an in-memory{' '}
             <a
               href="https://gist.github.com/nico-martin/64f2ae35ed9a0f890ef50c8d119a6222"
               target="_blank"
