@@ -1,5 +1,5 @@
 .root {
-  --message-color: var(--c-border);
+  --message-color: var(--c-gray);
 
   &.error {
     --message-color: var(--c-feedback-error);
@@ -27,7 +27,7 @@
   z-index: 0;
   background-color: var(--message-color);
   filter: brightness(40%);
-  transform: translateY(3px) translateX(3px);
+  transform: translateY(4px) translateX(4px);
 }
 
 .content {
