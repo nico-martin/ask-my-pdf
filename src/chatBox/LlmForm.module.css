@@ -52,3 +52,7 @@
   padding-top: var(--space-grid);
   border-top: 6px solid var(--c-border);
 }
+
+.error {
+  margin-top: 2rem;
+}

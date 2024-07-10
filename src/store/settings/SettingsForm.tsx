@@ -84,6 +84,7 @@ const SettingsForm: React.FC<{
         }
         min={0}
         max={100}
+        unit="%"
       />
       <FormElement<Settings>
         form={form}

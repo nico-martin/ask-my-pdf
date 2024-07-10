@@ -66,7 +66,8 @@ class VectorDB<T = {}> {
 
   public async search(
     query: string,
-    numberOfResults: number = 5
+    numberOfResults: number = 5,
+    similarityThreshold: number = 0.6
   ): Promise<Array<[VectorizedEntry<T>, number]>> {
     const [queryEmbedding] = await this.embedTexts([query]);
     const queryMagnitude = this.calculateMagnitude(queryEmbedding);
@@ -76,7 +77,10 @@ class VectorDB<T = {}> {
       queryMagnitude
     );
     const sorted = scores.sort((a, b) => b[1] - a[1]);
-    return sorted.slice(0, numberOfResults);
+    const similarityFiltered = sorted.filter(
+      (entry) => entry[1] > similarityThreshold
+    );
+    return similarityFiltered.slice(0, numberOfResults);
   }
 
   public clear(): void {

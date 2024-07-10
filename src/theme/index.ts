@@ -6,6 +6,8 @@ export { IconName } from './svg/icons';
 
 export { default as Modal } from './shadowBox/Modal';
 
+export { default as Message, MESSAGE_TYPE } from './misc/Message.tsx';
+
 export { default as Form } from './form/Form.tsx';
 export { default as FormControls } from './form/FormControls';
 export { default as FormElement } from './form/FormElement';

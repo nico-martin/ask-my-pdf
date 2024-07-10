@@ -7,6 +7,7 @@ export interface InputRangeProps<T> extends InputBaseProps<T> {
   max?: number;
   min?: number;
   step?: number;
+  unit?: string;
 }
 
 const InputRange = <T,>({
@@ -16,11 +17,15 @@ const InputRange = <T,>({
   max = 100,
   min = 0,
   step = 1,
+  unit = '',
   ...props
 }: InputRangeProps<T> & InputProps<T>) => {
   return (
     <div className={cn(className, styles.wrapper)}>
-      <span className={styles.value}>{value?.toString()}</span>
+      <span className={styles.value}>
+        {value?.toString()}
+        {unit}
+      </span>
       <input
         name={name}
         className={cn(className, inputStyles.input, styles.input)}

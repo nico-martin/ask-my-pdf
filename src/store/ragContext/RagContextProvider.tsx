@@ -96,7 +96,11 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     setActiveLines({ exact: [], fuzzy: [] });
     setResults([]);
     const started = new Date();
-    const results = await db.search(query);
+    const results = await db.search(
+      query,
+      settings.maxNumberOfResults,
+      settings.similarityThreshold / 100
+    );
     setBenchmark('searchDbMillis', new Date().getTime() - started.getTime());
     setBenchmark('searchDbCount', results.length);
     setResults(results);
@@ -112,11 +116,12 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
           (entry) =>
             entry.metadata.paragraphIndex ===
               result[0].metadata.paragraphIndex &&
-            entry.metadata.index === result[0].metadata.index + (i - 3)
+            entry.metadata.index ===
+              result[0].metadata.index + (i - settings.resultsBeforeAndAfter)
         );
         if (line) {
           entry += ' ' + line.str;
-          if (i - 3 === 0) {
+          if (i - settings.resultsBeforeAndAfter === 0) {
             activeLines.push(
               line.metadata.paragraphIndex + '-' + line.metadata.index
             );
@@ -130,6 +135,8 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
       foundEntries.push(entry);
     });
     setActiveLines({ exact: activeLines, fuzzy: fuzzyLines });
+
+    console.log({ exact: activeLines, fuzzy: fuzzyLines });
 
     const prompt = settings.promptTemplate
       .replace('{documentTitle}', pdfTitle)

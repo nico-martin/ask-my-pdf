@@ -1,0 +1,43 @@
+.root {
+  --message-color: var(--c-border);
+
+  &.error {
+    --message-color: var(--c-feedback-error);
+  }
+
+  &.warning {
+    --message-color: var(--c-feedback-warning);
+  }
+
+  &.success {
+    --message-color: var(--c-feedback-success);
+  }
+
+  position: relative;
+  transform: translateY(-1.5px) translateX(-1.5px);
+}
+
+.bkg {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-color: var(--message-color);
+  filter: brightness(40%);
+  transform: translateY(3px) translateX(3px);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  background-color: var(--message-color);
+  padding: 0.75em;
+  color: var(--c-white);
+
+  & > * + * {
+    margin-top: 0.5em;
+  }
+}
