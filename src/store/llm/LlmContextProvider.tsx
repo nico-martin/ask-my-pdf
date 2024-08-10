@@ -1,55 +1,39 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import { CallbackData, context } from './llmContext.ts';
-import { GenerationState } from './webllm/static/types.ts';
-import { dispatchWorkerEvent, onWorkerEvent } from './worker/client.ts';
-import { WorkerRequest, WorkerResponse } from './worker/types.ts';
-import Gemma2B from './webllm/models/Gemma2B.ts';
-
-const model = Gemma2B;
+import model from './webllm/models';
+import { CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
+import { InitProgressCallback } from '@mlc-ai/web-llm/lib/types';
 
 const LlmContextProvider: React.FC<{
   children: React.ReactElement;
 }> = ({ children }) => {
   const [workerBusy, setWorkerBusy] = React.useState<boolean>(false);
   const [modelLoaded, setModelLoaded] = React.useState<string>(null);
-
-  const worker = React.useRef(null);
-
-  React.useEffect(() => {
-    if (!worker.current) {
-      worker.current = new Worker(
-        new URL('./worker/worker.ts', import.meta.url),
-        {
-          type: 'module',
-        }
-      );
-    }
-
-    const onMessageReceived = (e: MessageEvent<WorkerResponse>) =>
-      dispatchWorkerEvent(e.data);
-
-    worker.current.addEventListener('message', onMessageReceived);
-    return () =>
-      worker.current.removeEventListener('message', onMessageReceived);
-  }, []);
-
-  const postWorkerMessage = (
-    payload: WorkerRequest,
-    cb: (data: WorkerResponse) => void
-  ) => {
-    worker.current.postMessage(payload);
-    onWorkerEvent(payload.requestId, (data: WorkerResponse) => cb(data));
-  };
+  const [engine, setEngine] = React.useState<MLCEngine>(null);
 
   const initialize = (
-    callback: (data: CallbackData) => void = () => {}
+    callback: InitProgressCallback = () => {}
   ): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       model.id === modelLoaded && resolve(true);
-      generate('', callback)
-        .then(() => resolve(true))
+      CreateMLCEngine(model.id, {
+        initProgressCallback: callback,
+        appConfig: {
+          model_list: [
+            {
+              model: model.url,
+              model_id: model.id,
+              model_lib: model.libUrl,
+            },
+          ],
+        },
+      })
+        .then((engine) => {
+          setEngine(engine);
+          setModelLoaded(model.id);
+          resolve(true);
+        })
         .catch(reject);
     });
   };
@@ -58,65 +42,36 @@ const LlmContextProvider: React.FC<{
     prompt: string = '',
     callback: (data: CallbackData) => void = () => {}
   ): Promise<string> =>
-    new Promise((resolve, reject) => {
+    new Promise(async (resolve, reject) => {
       setWorkerBusy(true);
-      const requestId = uuidv4();
 
-      postWorkerMessage(
-        {
-          model,
-          prompt,
-          rememberPreviousConversation: false,
-          conversationConfig: {},
-          requestId,
-        },
-        (data: WorkerResponse) => {
-          switch (data.status) {
-            case 'progress': {
-              callback({
-                feedback: GenerationState.INITIALIZING,
-                output: '',
-                progress: data.progress,
-              });
-              break;
-            }
-            case 'initDone': {
-              callback({
-                feedback: GenerationState.THINKING,
-                output: '',
-                progress: 100,
-              });
-              setModelLoaded(model.id);
-              break;
-            }
-            case 'update': {
-              callback({
-                feedback: GenerationState.ANSWERING,
-                output: data.output || '',
-                progress: 100,
-              });
-              break;
-            }
-            case 'complete': {
-              callback({
-                feedback: GenerationState.COMPLETE,
-                output: data.output || '',
-                progress: 100,
-                stats: data?.runtimeStats || null,
-              });
-              setWorkerBusy(false);
-              setModelLoaded(model.id);
-              resolve(data.output);
-              break;
-            }
-            case 'error': {
-              setWorkerBusy(false);
-              reject(data.error);
-              break;
-            }
+      try {
+        const chunks = await engine.chat.completions.create({
+          messages: [
+            { role: 'system', content: 'You are a helpful AI assistant.' },
+            { role: 'user', content: prompt },
+          ],
+          temperature: 1,
+          stream: true,
+          stream_options: { include_usage: true },
+        });
+
+        let reply = '';
+        for await (const chunk of chunks) {
+          reply += chunk.choices[0]?.delta.content || '';
+          if (chunk.usage) {
+            callback({ output: reply, stats: chunk.usage });
+          } else {
+            callback({ output: reply });
           }
         }
-      );
+
+        const fullReply = await engine.getMessage();
+        setWorkerBusy(false);
+        resolve(fullReply);
+      } catch (e) {
+        reject(e);
+      }
     });
 
   return (

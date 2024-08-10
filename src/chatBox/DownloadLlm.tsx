@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './DownloadLlm.module.css';
 import { Button, IconName } from '@theme';
 import { formatBytes } from '@utils/functions.ts';
-import Gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
+import llm from '@store/llm/webllm/models';
 import cn from '@utils/classnames.ts';
 import useLlm from '@store/llm/useLlm.ts';
 
@@ -30,16 +30,16 @@ const DownloadLlm: React.FC<{ className?: string; onFinish: () => void }> = ({
           setDownloadLLMRunning(false);
           onFinish();
         }}
-        contentWidth={292}
+        contentWidth={310}
         classNameIconWrapper={styles.buttonIconWrapper}
       >
-        download Gemma 2b (
+        download {llm.title} (
         {downloadLLMRunning
           ? `${Math.round(downloadLLMProgress * 100)}%`
-          : formatBytes(Gemma2B.size)}
+          : formatBytes(llm.size)}
         )
       </Button>
-      <p className={styles.modelDescription}>{Gemma2B.about}</p>
+      <p className={styles.modelDescription}>{llm.about}</p>
     </div>
   );
 };

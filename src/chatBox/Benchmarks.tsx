@@ -2,7 +2,7 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import { formatMilliseconds } from '@utils/functions.ts';
-import gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
+import llm from '@store/llm/webllm/models';
 
 import styles from './Benchmarks.module.css';
 
@@ -46,8 +46,8 @@ const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
         </li>
         <li>
           Answer generated with{' '}
-          <a href={gemma2B.cardLink} target="_blank">
-            {gemma2B.title}
+          <a href={llm.cardLink} target="_blank">
+            {llm.title}
           </a>{' '}
           in <b>{formatMilliseconds(benchmarks.generatedMillis)}</b>
         </li>

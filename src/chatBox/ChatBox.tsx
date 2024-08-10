@@ -7,9 +7,9 @@ import showdown from 'showdown';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import DownloadLlm from './DownloadLlm.tsx';
 import LlmForm from './LlmForm.tsx';
-import gemma2B from '@store/llm/webllm/models/Gemma2B.ts';
+import llm from '@store/llm/webllm/models';
 
-const LLM_COOKIE = gemma2B.id + '-loaded';
+const LLM_COOKIE = llm.id + '-loaded';
 const showdownConverter = new showdown.Converter();
 
 const initLlmIsLoaded =
