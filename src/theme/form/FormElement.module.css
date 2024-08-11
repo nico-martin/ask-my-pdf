@@ -26,7 +26,8 @@
   flex-direction: column;
 }
 
-.description {
+.description,
+.informations {
   color: #676767;
   margin-top: 0.2em;
 
@@ -42,6 +43,9 @@
   & > * + * {
     margin-top: 0.5em;
   }
+}
+.informations {
+  margin-top: 1em;
 }
 
 .containerStacked .description {

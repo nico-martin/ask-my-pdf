@@ -1,1 +1,0 @@
-This is a fork of https://github.com/mlc-ai/web-llm to play around with some possible refactorings.

@@ -1,6 +1,6 @@
 {
   "name": "ask-my-pdf",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -45,6 +45,7 @@
     "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.56",
     "@mlc-ai/web-tokenizers": "^0.1.2",
     "@nico-martin/tvmjs": "^0.22.0-dev0",
     "@xenova/transformers": "github:xenova/transformers.js#da981ac",

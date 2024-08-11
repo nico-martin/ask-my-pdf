@@ -1,4 +1,4 @@
-import md5 from "./utils/md5";
+import md5 from '@store/llm/webllm/models/utils/md5.ts';
 
 class Model {
   public libUrl: string;
@@ -16,7 +16,7 @@ class Model {
     cardLink,
     title,
     size = 0,
-    about = "",
+    about = '',
     requiredFeatures = [],
   }: {
     url: string;
