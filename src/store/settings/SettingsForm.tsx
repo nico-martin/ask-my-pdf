@@ -11,7 +11,10 @@ import {
 import { Settings } from '@store/settings/settingsContext.ts';
 import { FeatureExtractionModel } from '@utils/vectorDB/VectorDB.ts';
 import styles from './SettingsForm.module.css';
-import { INITIAL_SETTINGS } from '@store/settings/constants.ts';
+import {
+  FEATURE_EXTRACTION_MODEL_METAS,
+  INITIAL_SETTINGS,
+} from '@store/settings/constants.ts';
 
 const SettingsForm: React.FC<{
   defaultValues: Settings;
@@ -102,6 +105,23 @@ const SettingsForm: React.FC<{
             If the model is changed, the document is re-indexed. This can take a
             while.
           </p>
+        }
+        Informations={
+          <React.Fragment>
+            <p>Available models:</p>
+            <ul>
+              {Object.values(FeatureExtractionModel).map((model) => (
+                <li>
+                  <a
+                    href={FEATURE_EXTRACTION_MODEL_METAS[model].url}
+                    target="_blank"
+                  >
+                    {model}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </React.Fragment>
         }
       />
       <FormControls

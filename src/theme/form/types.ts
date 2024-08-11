@@ -46,6 +46,7 @@ interface FormElementBaseProps<T> {
   inputClassName?: string;
   stacked?: boolean;
   Description?: React.ReactElement | string | Array<React.ReactElement>;
+  Informations?: React.ReactElement | string | Array<React.ReactElement>;
   sanitizeValue?: (value: any) => any;
 }
 

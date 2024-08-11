@@ -18,6 +18,7 @@ const FormElement = <T,>({
   inputClassName = '',
   stacked = false,
   Description,
+  Informations,
   sanitizeValue = (value: any) => value,
   ...inputProps
 }: FormElementProps<T>) => {
@@ -79,6 +80,9 @@ const FormElement = <T,>({
             {...inputBaseProps}
             {...(inputProps as InputTextProps<T>)}
           />
+        )}
+        {Informations && (
+          <div className={styles.informations}>{Informations}</div>
         )}
         {error && <p className={styles.error}>{error.message}</p>}
       </div>

@@ -5,9 +5,12 @@ import { formatMilliseconds } from '@utils/functions.ts';
 import llm from '@store/llm/webllm/models';
 
 import styles from './Benchmarks.module.css';
+import useSettingsContext from '@store/settings/useSettingsContext.ts';
+import { FEATURE_EXTRACTION_MODEL_METAS } from '@store/settings/constants.ts';
 
 const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
   const { benchmarks } = useRagContext();
+  const { settings } = useSettingsContext();
   return (
     <div className={cn(className, styles.root)}>
       <h3>Benchmarks</h3>
@@ -23,10 +26,16 @@ const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
           <b>{benchmarks.entriesVectorized}</b> strings vectorized in{' '}
           <b>{formatMilliseconds(benchmarks.entriesVectorizedMillis)}</b> using{' '}
           <a
-            href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
+            href={
+              FEATURE_EXTRACTION_MODEL_METAS[settings.featureExtractionModel]
+                .url
+            }
             target="_blank"
           >
-            all-MiniLM-L6-v2
+            {
+              FEATURE_EXTRACTION_MODEL_METAS[settings.featureExtractionModel]
+                .name
+            }
           </a>{' '}
           with{' '}
           <a href="https://github.com/xenova/transformers.js" target="_blank">
