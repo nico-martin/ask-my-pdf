@@ -55,8 +55,9 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
           </p>
           <h3>2. Vector Search</h3>
           <p>
-            Every line will be mapped to a 384 dimensional dense vector space
-            using{' '}
+            Individual paragraphs and then sentences are extracted from the
+            document and will be mapped to a multi-dimensional dense vector
+            space using{' '}
             <a
               href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
               target="_blank"
