@@ -9,7 +9,7 @@ const model = new Model({
   requiredFeatures: ['shader-f16'],
   cardLink: 'https://huggingface.co/google/gemma-2-2b',
   about:
-    "Gemma2-2B, developed by Google Deepmind, is a lightweight large language model (LLM) built on the same research and technology as the powerful Gemini models. This means it inherits some of Gemini's capabilities while being designed for efficient operation on small devices.",
+    "The Gemma2 2B model is a compact, state-of-the-art text generation model from Google's Gemma family. It excels in tasks like question answering, summarization, and reasoning, and is small enough to run on resource-limited devices, making advanced AI accessible and fostering innovation.",
 });
 
 export default model;
