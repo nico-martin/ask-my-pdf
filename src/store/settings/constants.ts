@@ -1,5 +1,6 @@
 import { Settings } from './settingsContext.ts';
 import { FeatureExtractionModel } from '@utils/vectorDB/VectorDB.ts';
+import models from '@store/llm/models';
 
 export const INITIAL_SETTINGS: Settings = {
   promptTemplate: `INSTRUCTIONS:
@@ -14,6 +15,7 @@ DOCUMENT:
 
 QUESTION:
 {question}`,
+  languageModelId: models[0].model.id,
   resultsBeforeAndAfter: 3,
   maxNumberOfResults: 5,
   similarityThreshold: 60,

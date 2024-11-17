@@ -25,7 +25,7 @@ const InputSelect = <T,>({
   return (
     <div className={cn(className, inputStyles.inputWrapper)}>
       <select
-        value={value.toString()}
+        value={value?.toString()}
         id={name}
         name={name}
         className={cn(className, inputStyles.input)}

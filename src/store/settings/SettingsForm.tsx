@@ -15,7 +15,8 @@ import {
   FEATURE_EXTRACTION_MODEL_METAS,
   INITIAL_SETTINGS,
 } from '@store/settings/constants.ts';
-
+import models from '@store/llm/models/index.ts';
+import { formatBytes } from '@utils/functions.ts';
 const SettingsForm: React.FC<{
   defaultValues: Settings;
   setValues: (data: Settings) => void;
@@ -32,6 +33,33 @@ const SettingsForm: React.FC<{
 
   return (
     <Form onSubmit={form.handleSubmit(setValues)}>
+      <FormElement<Settings>
+        form={form}
+        label="Language Model"
+        name="languageModelId"
+        input={InputType.SELECT}
+        options={
+          Object.values(models).reduce(
+            (acc, curr) => ({ ...acc, [curr.model.id]: curr.model.title }),
+            {}
+          ) as Record<string, string>
+        }
+        Informations={
+          <React.Fragment>
+            <p>Available models:</p>
+            <ul>
+              {Object.values(models).map(({ model }) => (
+                <li>
+                  <a href={model.cardLink} target="_blank">
+                    {model.title}
+                    {model.size ? ` (${formatBytes(model.size)})` : ''}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </React.Fragment>
+        }
+      />
       <FormElement<Settings>
         form={form}
         label="Prompt Template"

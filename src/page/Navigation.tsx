@@ -3,13 +3,12 @@ import cn from '@utils/classnames.ts';
 import styles from './Navigation.module.css';
 import { Button, IconName, Modal } from '@theme';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';
-import useLlm from '@store/llm/useLlm.ts';
 
 const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [aboutModal, setAboutModal] = React.useState<boolean>(false);
   const [legalModal, setLegalModal] = React.useState<boolean>(false);
   const { setShowModal } = useSettingsContext();
-  const { model } = useLlm();
+
   return (
     <nav className={cn(className, styles.root)}>
       <span className={styles.title}>Ask my PDF</span>
@@ -88,15 +87,8 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
           <h3>3. LLM answer generation</h3>
           <p>
             The text sections found this way together with the query and a few
-            instructions are then used as the input prompt to the{' '}
-            <a href={model.cardLink} target="_blank">
-              {model.title}
-            </a>{' '}
-            LLM, compiled to WebAssembly and WebGPU using{' '}
-            <a href="https://llm.mlc.ai/" target="_blank">
-              MLC LLM
-            </a>
-            , which will then generate a response.
+            instructions are then used as the input prompt to the Large Language
+            Model, which will then generate a response directly in the browser.
           </p>
           <h2>Credits</h2>
           <p>

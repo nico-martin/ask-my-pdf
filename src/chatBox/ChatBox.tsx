@@ -17,32 +17,34 @@ const ChatBox: React.FC<{
   className?: string;
 }> = ({ className = '' }) => {
   const { entries, llmResponse, results } = useRagContext();
-  const { initialize, model } = useLlm();
-  const [llmLoaded, setLlmLoaded] = React.useState<boolean>(
-    Cookies.get(getLlmCookie(model)) === 'loaded' &&
-      Cookies.get('suppressLoaded') !== 'true'
-  );
+  const { initialize, model, ready } = useLlm();
+  const [preloaded, setPreloaded] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    window.setTimeout(
-      () => (llmLoaded || model.size === 0) && initialize(),
-      200
-    );
-  }, []);
+    if (ready) return;
+    setPreloaded(false);
+    if (
+      model.size === 0 ||
+      (Cookies.get(getLlmCookie(model)) === 'loaded' &&
+        Cookies.get('suppressLoaded') !== 'true')
+    ) {
+      setPreloaded(true);
+      initialize();
+    }
+  }, [model]);
 
   return (
     <div
       className={cn(className, styles.root, {
-        [styles.loaded]: llmLoaded && entries.length !== 0,
+        [styles.loaded]: (ready || preloaded) && entries.length !== 0,
       })}
     >
-      {!llmLoaded ? (
+      {!ready && !preloaded ? (
         <DownloadLlm
           className={styles.downloadWrapper}
-          onFinish={() => {
-            setLlmLoaded(true);
-            Cookies.set(getLlmCookie(model), 'loaded', { expires: 365 });
-          }}
+          onFinish={() =>
+            Cookies.set(getLlmCookie(model), 'loaded', { expires: 365 })
+          }
         />
       ) : entries.length === 0 ? (
         <p className={styles.addDocument}>

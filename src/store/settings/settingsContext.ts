@@ -16,6 +16,7 @@ type Range<F extends number, T extends number> = Exclude<
 
 export interface Settings {
   promptTemplate: string;
+  languageModelId: string;
   featureExtractionModel: FeatureExtractionModel;
   resultsBeforeAndAfter: number;
   maxNumberOfResults: number;

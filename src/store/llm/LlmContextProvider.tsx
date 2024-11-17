@@ -9,21 +9,24 @@ import {
   InitializeCallbackData,
   LlmInterface,
 } from '@store/llm/types.ts';
+import useSettingsContext from '@store/settings/useSettingsContext.ts';
 
 const LlmContextProvider: React.FC<{
   children: React.ReactElement;
-  modelId: string;
-}> = ({ children, modelId }) => {
+}> = ({ children }) => {
   const [workerBusy, setWorkerBusy] = React.useState<boolean>(false);
   const [modelLoaded, setModelLoaded] = React.useState<string>(null);
+  const { settings } = useSettingsContext();
   const model = React.useMemo(
-    () => models.find((m) => m.model.id === modelId)?.model || models[0].model,
-    [modelId]
+    () =>
+      models.find((m) => m.model.id === settings.languageModelId)?.model ||
+      models[0].model,
+    [settings.languageModelId]
   );
 
   const llmInterface: LlmInterface = React.useMemo(
     () =>
-      model.title === 'PromptAPI'
+      model.id === 'prompt-api'
         ? new PromptApi('You are a helpful AI assistant.')
         : new WebLlm('You are a helpful AI assistant.', model),
     [model]
@@ -31,12 +34,12 @@ const LlmContextProvider: React.FC<{
 
   const initialize = (
     callback: (data: InitializeCallbackData) => void = () => {}
-  ): Promise<boolean> => {
-    return new Promise((resolve, reject) => {
+  ): Promise<boolean> =>
+    new Promise((resolve, reject) => {
       llmInterface
         .initialize(callback)
         .then(() => {
-          setModelLoaded('web');
+          setModelLoaded(model.id);
           resolve(true);
         })
         .then(() => {
@@ -44,7 +47,6 @@ const LlmContextProvider: React.FC<{
         })
         .catch(reject);
     });
-  };
 
   const generate = (
     prompt: string = '',
@@ -70,7 +72,7 @@ const LlmContextProvider: React.FC<{
   return (
     <context.Provider
       value={{
-        ready: Boolean(modelLoaded),
+        ready: modelLoaded === model.id,
         busy: workerBusy,
         initialize,
         generate,
