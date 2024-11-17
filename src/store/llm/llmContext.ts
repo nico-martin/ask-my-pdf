@@ -3,6 +3,7 @@ import {
   GenerateCallbackData,
   InitializeCallbackData,
 } from '@store/llm/types.ts';
+import Model from '@store/llm/models/Model.ts';
 
 export interface Context {
   initialize: (
@@ -14,6 +15,7 @@ export interface Context {
   ) => Promise<string>;
   ready: boolean;
   busy: boolean;
+  model: Model;
 }
 
 export const context = React.createContext<Context>({
@@ -21,4 +23,5 @@ export const context = React.createContext<Context>({
   generate: async () => '',
   ready: false,
   busy: false,
+  model: null,
 });

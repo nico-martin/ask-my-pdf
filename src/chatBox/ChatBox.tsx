@@ -7,24 +7,27 @@ import showdown from 'showdown';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import DownloadLlm from './DownloadLlm.tsx';
 import LlmForm from './LlmForm.tsx';
-import llm from '../store/llm/models';
+import Model from '@store/llm/models/Model.ts';
 
-const LLM_COOKIE = llm.id + '-loaded';
 const showdownConverter = new showdown.Converter();
 
-const initLlmIsLoaded =
-  Cookies.get(LLM_COOKIE) === 'loaded' &&
-  Cookies.get('suppressLoaded') !== 'true';
+const getLlmCookie = (model: Model) => model.id + '-loaded';
 
 const ChatBox: React.FC<{
   className?: string;
 }> = ({ className = '' }) => {
   const { entries, llmResponse, results } = useRagContext();
-  const { initialize } = useLlm();
-  const [llmLoaded, setLlmLoaded] = React.useState<boolean>(initLlmIsLoaded);
+  const { initialize, model } = useLlm();
+  const [llmLoaded, setLlmLoaded] = React.useState<boolean>(
+    Cookies.get(getLlmCookie(model)) === 'loaded' &&
+      Cookies.get('suppressLoaded') !== 'true'
+  );
 
   React.useEffect(() => {
-    window.setTimeout(() => llmLoaded && initialize(), 200);
+    window.setTimeout(
+      () => (llmLoaded || model.size === 0) && initialize(),
+      200
+    );
   }, []);
 
   return (
@@ -38,7 +41,7 @@ const ChatBox: React.FC<{
           className={styles.downloadWrapper}
           onFinish={() => {
             setLlmLoaded(true);
-            Cookies.set(LLM_COOKIE, 'loaded', { expires: 365 });
+            Cookies.set(getLlmCookie(model), 'loaded', { expires: 365 });
           }}
         />
       ) : entries.length === 0 ? (

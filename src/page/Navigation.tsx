@@ -2,13 +2,14 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import styles from './Navigation.module.css';
 import { Button, IconName, Modal } from '@theme';
-import llm from '../store/llm/models';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';
+import useLlm from '@store/llm/useLlm.ts';
 
 const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [aboutModal, setAboutModal] = React.useState<boolean>(false);
   const [legalModal, setLegalModal] = React.useState<boolean>(false);
   const { setShowModal } = useSettingsContext();
+  const { model } = useLlm();
   return (
     <nav className={cn(className, styles.root)}>
       <span className={styles.title}>Ask my PDF</span>
@@ -88,8 +89,8 @@ const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {
           <p>
             The text sections found this way together with the query and a few
             instructions are then used as the input prompt to the{' '}
-            <a href={llm.cardLink} target="_blank">
-              {llm.title}
+            <a href={model.cardLink} target="_blank">
+              {model.title}
             </a>{' '}
             LLM, compiled to WebAssembly and WebGPU using{' '}
             <a href="https://llm.mlc.ai/" target="_blank">

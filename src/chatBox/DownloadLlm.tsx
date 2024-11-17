@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './DownloadLlm.module.css';
 import { Button, IconName } from '@theme';
 import { formatBytes } from '@utils/functions.ts';
-import llm from '../store/llm/models';
 import cn from '@utils/classnames.ts';
 import useLlm from '@store/llm/useLlm.ts';
 
@@ -10,7 +9,7 @@ const DownloadLlm: React.FC<{ className?: string; onFinish: () => void }> = ({
   className = '',
   onFinish,
 }) => {
-  const { initialize } = useLlm();
+  const { initialize, model } = useLlm();
 
   const [downloadLLMRunning, setDownloadLLMRunning] =
     React.useState<boolean>(false);
@@ -33,13 +32,13 @@ const DownloadLlm: React.FC<{ className?: string; onFinish: () => void }> = ({
         contentWidth={310}
         classNameIconWrapper={styles.buttonIconWrapper}
       >
-        download {llm.title} (
+        download {model.title} (
         {downloadLLMRunning
           ? `${Math.round(downloadLLMProgress * 100)}%`
-          : formatBytes(llm.size)}
+          : formatBytes(model.size)}
         )
       </Button>
-      <p className={styles.modelDescription}>{llm.about}</p>
+      <p className={styles.modelDescription}>{model.about}</p>
     </div>
   );
 };

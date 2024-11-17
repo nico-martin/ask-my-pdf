@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { context } from './llmContext.ts';
-import model from './models';
+import models from './models';
 import WebLlm from '@store/llm/webllm/WebLlm.ts';
 import PromptApi from '@store/llm/promptApi/PromptApi.ts';
 import {
@@ -12,16 +12,21 @@ import {
 
 const LlmContextProvider: React.FC<{
   children: React.ReactElement;
-}> = ({ children }) => {
+  modelId: string;
+}> = ({ children, modelId }) => {
   const [workerBusy, setWorkerBusy] = React.useState<boolean>(false);
   const [modelLoaded, setModelLoaded] = React.useState<string>(null);
+  const model = React.useMemo(
+    () => models.find((m) => m.model.id === modelId)?.model || models[0].model,
+    [modelId]
+  );
 
   const llmInterface: LlmInterface = React.useMemo(
     () =>
       model.title === 'PromptAPI'
         ? new PromptApi('You are a helpful AI assistant.')
-        : new WebLlm('You are a helpful AI assistant.'),
-    []
+        : new WebLlm('You are a helpful AI assistant.', model),
+    [model]
   );
 
   const initialize = (
@@ -69,6 +74,7 @@ const LlmContextProvider: React.FC<{
         busy: workerBusy,
         initialize,
         generate,
+        model,
       }}
     >
       {children}

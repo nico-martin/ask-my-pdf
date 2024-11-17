@@ -6,8 +6,8 @@ const model = new Model({
   size: null,
   libUrl: null,
   requiredFeatures: null,
-  cardLink: null,
-  about: 'Test',
+  cardLink: 'https://github.com/explainers-by-googlers/prompt-api',
+  about: null,
 });
 
 export default model;

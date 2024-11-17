@@ -4,27 +4,29 @@ import {
   LlmInterface,
 } from '@store/llm/types.ts';
 
-import model from '../models';
 import { CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
+import Model from '@store/llm/models/Model.ts';
 
 class WebLlm implements LlmInterface {
   private systemPrompt: string;
   private engine: MLCEngine = null;
-  constructor(systemPrompt: string) {
+  private model: Model = null;
+  constructor(systemPrompt: string, model: Model) {
     this.systemPrompt = systemPrompt;
+    this.model = model;
   }
 
   public initialize = async (
     callback: (data: InitializeCallbackData) => void
   ): Promise<boolean> => {
-    this.engine = await CreateMLCEngine(model.id, {
+    this.engine = await CreateMLCEngine(this.model.id, {
       initProgressCallback: callback,
       appConfig: {
         model_list: [
           {
-            model: model.url,
-            model_id: model.id,
-            model_lib: model.libUrl,
+            model: this.model.url,
+            model_id: this.model.id,
+            model_lib: this.model.libUrl,
           },
         ],
       },

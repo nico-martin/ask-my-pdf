@@ -2,13 +2,14 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import { formatMilliseconds } from '@utils/functions.ts';
-import llm from '../store/llm/models';
 
 import styles from './Benchmarks.module.css';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';
 import { FEATURE_EXTRACTION_MODEL_METAS } from '@store/settings/constants.ts';
+import useLlm from '@store/llm/useLlm.ts';
 
 const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
+  const { model } = useLlm();
   const { benchmarks } = useRagContext();
   const { settings } = useSettingsContext();
   return (
@@ -55,8 +56,8 @@ const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
         </li>
         <li>
           Answer generated with{' '}
-          <a href={llm.cardLink} target="_blank">
-            {llm.title}
+          <a href={model.cardLink} target="_blank">
+            {model.title}
           </a>{' '}
           in <b>{formatMilliseconds(benchmarks.generatedMillis)}</b>
         </li>
