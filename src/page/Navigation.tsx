@@ -2,7 +2,7 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import styles from './Navigation.module.css';
 import { Button, IconName, Modal } from '@theme';
-import llm from '@store/llm/webllm/models';
+import llm from '../store/llm/models';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';
 
 const Navigation: React.FC<{ className?: string }> = ({ className = '' }) => {

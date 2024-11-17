@@ -1,37 +1,40 @@
 import React from 'react';
 
-import { CallbackData, context } from './llmContext.ts';
-import model from './webllm/models';
-import { CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
-import { InitProgressCallback } from '@mlc-ai/web-llm/lib/types';
+import { context } from './llmContext.ts';
+import model from './models';
+import WebLlm from '@store/llm/webllm/WebLlm.ts';
+import PromptApi from '@store/llm/promptApi/PromptApi.ts';
+import {
+  GenerateCallbackData,
+  InitializeCallbackData,
+  LlmInterface,
+} from '@store/llm/types.ts';
 
 const LlmContextProvider: React.FC<{
   children: React.ReactElement;
 }> = ({ children }) => {
   const [workerBusy, setWorkerBusy] = React.useState<boolean>(false);
   const [modelLoaded, setModelLoaded] = React.useState<string>(null);
-  const [engine, setEngine] = React.useState<MLCEngine>(null);
+
+  const llmInterface: LlmInterface = React.useMemo(
+    () =>
+      model.title === 'PromptAPI'
+        ? new PromptApi('You are a helpful AI assistant.')
+        : new WebLlm('You are a helpful AI assistant.'),
+    []
+  );
 
   const initialize = (
-    callback: InitProgressCallback = () => {}
+    callback: (data: InitializeCallbackData) => void = () => {}
   ): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      model.id === modelLoaded && resolve(true);
-      CreateMLCEngine(model.id, {
-        initProgressCallback: callback,
-        appConfig: {
-          model_list: [
-            {
-              model: model.url,
-              model_id: model.id,
-              model_lib: model.libUrl,
-            },
-          ],
-        },
-      })
-        .then((engine) => {
-          setEngine(engine);
-          setModelLoaded(model.id);
+      llmInterface
+        .initialize(callback)
+        .then(() => {
+          setModelLoaded('web');
+          resolve(true);
+        })
+        .then(() => {
           resolve(true);
         })
         .catch(reject);
@@ -40,36 +43,21 @@ const LlmContextProvider: React.FC<{
 
   const generate = (
     prompt: string = '',
-    callback: (data: CallbackData) => void = () => {}
+    callback: (data: GenerateCallbackData) => void = () => {}
   ): Promise<string> =>
     new Promise(async (resolve, reject) => {
       setWorkerBusy(true);
-
       try {
-        const chunks = await engine.chat.completions.create({
-          messages: [
-            { role: 'system', content: 'You are a helpful AI assistant.' },
-            { role: 'user', content: prompt },
-          ],
-          temperature: 1,
-          stream: true,
-          stream_options: { include_usage: true },
-        });
-
-        let reply = '';
-        for await (const chunk of chunks) {
-          reply += chunk.choices[0]?.delta.content || '';
-          if (chunk.usage) {
-            callback({ output: reply, stats: chunk.usage });
-          } else {
-            callback({ output: reply });
-          }
-        }
-
-        const fullReply = await engine.getMessage();
+        const fullReply = await llmInterface.generate(prompt, (data) =>
+          callback({
+            output: data.output,
+            stats: null,
+          })
+        );
         setWorkerBusy(false);
         resolve(fullReply);
       } catch (e) {
+        setWorkerBusy(false);
         reject(e);
       }
     });

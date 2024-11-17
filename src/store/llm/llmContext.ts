@@ -1,18 +1,16 @@
 import React from 'react';
-
-import { InitProgressCallback } from '@mlc-ai/web-llm/lib/types';
-import { CompletionUsage } from '@mlc-ai/web-llm/lib/openai_api_protocols/chat_completion';
-
-export interface CallbackData {
-  output: string;
-  stats?: CompletionUsage;
-}
+import {
+  GenerateCallbackData,
+  InitializeCallbackData,
+} from '@store/llm/types.ts';
 
 export interface Context {
-  initialize: (callback?: InitProgressCallback) => Promise<boolean>;
+  initialize: (
+    callback?: (data: InitializeCallbackData) => void
+  ) => Promise<boolean>;
   generate: (
     prompt: string,
-    callback: (data: CallbackData) => void
+    callback: (data: GenerateCallbackData) => void
   ) => Promise<string>;
   ready: boolean;
   busy: boolean;

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './DownloadLlm.module.css';
 import { Button, IconName } from '@theme';
 import { formatBytes } from '@utils/functions.ts';
-import llm from '@store/llm/webllm/models';
+import llm from '../store/llm/models';
 import cn from '@utils/classnames.ts';
 import useLlm from '@store/llm/useLlm.ts';
 

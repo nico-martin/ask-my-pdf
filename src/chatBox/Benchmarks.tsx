@@ -2,7 +2,7 @@ import React from 'react';
 import cn from '@utils/classnames.ts';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import { formatMilliseconds } from '@utils/functions.ts';
-import llm from '@store/llm/webllm/models';
+import llm from '../store/llm/models';
 
 import styles from './Benchmarks.module.css';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';

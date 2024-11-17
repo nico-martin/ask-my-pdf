@@ -1,4 +1,4 @@
-import md5 from '@store/llm/webllm/models/utils/md5.ts';
+import md5 from '@store/llm/models/utils/md5.ts';
 
 class Model {
   public libUrl: string;

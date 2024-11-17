@@ -70,6 +70,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
         file && parsePdf(file);
       })
       .catch((e) => {
+        console.log(e);
         setModelLoading(false);
         setModelError(e.toString());
       });

@@ -1,5 +1,5 @@
 // @ts-ignore
-import { FeatureExtractionPipeline, pipeline } from '@xenova/transformers';
+import { FeatureExtractionPipeline, pipeline } from '@huggingface/transformers';
 
 export interface Entry<T> {
   str: string;

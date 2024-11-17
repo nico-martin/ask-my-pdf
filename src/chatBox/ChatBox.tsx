@@ -7,7 +7,7 @@ import showdown from 'showdown';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import DownloadLlm from './DownloadLlm.tsx';
 import LlmForm from './LlmForm.tsx';
-import llm from '@store/llm/webllm/models';
+import llm from '../store/llm/models';
 
 const LLM_COOKIE = llm.id + '-loaded';
 const showdownConverter = new showdown.Converter();
@@ -60,8 +60,8 @@ const ChatBox: React.FC<{
                 <div className={styles.source}>
                   <h3 className={styles.sourceTitle}>Sources</h3>
                   <ul className={styles.sourceList}>
-                    {results.map((result) => (
-                      <li className={styles.sourceEntry}>
+                    {results.map((result, i) => (
+                      <li className={styles.sourceEntry} key={i}>
                         <a
                           className={styles.sourceLink}
                           href={`#L${result[0].metadata.paragraphIndex}-${result[0].metadata.index}`}
