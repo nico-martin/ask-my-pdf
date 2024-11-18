@@ -20,4 +20,5 @@ As soon as a query is submitted, it is also vectorized and the cosine similarity
 
 ## 3. LLM answer generation
 
-The text sections found this way together with the query and a few instructions are then used as the input prompt to the [Gemma2-2B](https://huggingface.co/google/gemma-2-2b) LLM, compiled to WebAssembly and WebGPU using [MLC LLM](https://llm.mlc.ai/), which will then generate a response.
+The text sections found this way together with the query and a few instructions are then used as the input prompt to the [Gemma2-2B](https://huggingface.co/google/gemma-2-2b) or [Gemma2-9B](https://huggingface.co/google/gemma-2-9b), compiled to WebAssembly and WebGPU using [MLC LLM](https://llm.mlc.ai/), which will then generate a response.  
+If available, also the [Prompt API](https://github.com/explainers-by-googlers/prompt-api) can be used to generate text. The Prompt API is an experimental project by Google Chrome, so it is only available in a few browsers yet.
