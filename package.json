@@ -10,7 +10,11 @@
     "preview": "vite preview",
     "generate-pwa-assets": "pwa-assets-generator"
   },
-  "author": "",
+  "author": "Nico Martin <mail@nico.dev>",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nico-martin/wp-ai-assistant.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
