@@ -17,6 +17,7 @@ import {
 } from '@store/settings/constants.ts';
 import models from '@store/llm/models/index.ts';
 import { formatBytes } from '@utils/functions.ts';
+import { getLlmDownloaded } from '@store/llm/llmCookie.ts';
 const SettingsForm: React.FC<{
   defaultValues: Settings;
   setValues: (data: Settings) => void;
@@ -40,7 +41,14 @@ const SettingsForm: React.FC<{
         input={InputType.SELECT}
         options={
           Object.values(models).reduce(
-            (acc, curr) => ({ ...acc, [curr.model.id]: curr.model.title }),
+            (acc, curr) => ({
+              ...acc,
+              [curr.model.id]:
+                curr.model.title +
+                (curr.model.size
+                  ? ` (${formatBytes(curr.model.size)}${getLlmDownloaded(curr.model) ? ' - cached' : ''})`
+                  : ''),
+            }),
             {}
           ) as Record<string, string>
         }
@@ -52,7 +60,9 @@ const SettingsForm: React.FC<{
                 <li>
                   <a href={model.cardLink} target="_blank">
                     {model.title}
-                    {model.size ? ` (${formatBytes(model.size)})` : ''}
+                    {model.size
+                      ? ` (${formatBytes(model.size)}${getLlmDownloaded(model) ? ' - cached' : ''})`
+                      : ''}
                   </a>
                 </li>
               ))}

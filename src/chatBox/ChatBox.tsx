@@ -2,16 +2,13 @@ import React from 'react';
 import useLlm from '../store/llm/useLlm.ts';
 import cn from '@utils/classnames.ts';
 import styles from './ChatBox.module.css';
-import Cookies from 'js-cookie';
 import showdown from 'showdown';
 import useRagContext from '@store/ragContext/useRagContext.ts';
 import DownloadLlm from './DownloadLlm.tsx';
 import LlmForm from './LlmForm.tsx';
-import Model from '@store/llm/models/Model.ts';
+import { getLlmDownloaded, setLlmDownloaded } from '@store/llm/llmCookie.ts';
 
 const showdownConverter = new showdown.Converter();
-
-const getLlmCookie = (model: Model) => model.id + '-loaded';
 
 const ChatBox: React.FC<{
   className?: string;
@@ -23,11 +20,7 @@ const ChatBox: React.FC<{
   React.useEffect(() => {
     if (ready) return;
     setPreloaded(false);
-    if (
-      model.size === 0 ||
-      (Cookies.get(getLlmCookie(model)) === 'loaded' &&
-        Cookies.get('suppressLoaded') !== 'true')
-    ) {
+    if (model.size === 0 || getLlmDownloaded(model)) {
       setPreloaded(true);
       initialize();
     }
@@ -42,9 +35,7 @@ const ChatBox: React.FC<{
       {!ready && !preloaded ? (
         <DownloadLlm
           className={styles.downloadWrapper}
-          onFinish={() =>
-            Cookies.set(getLlmCookie(model), 'loaded', { expires: 365 })
-          }
+          onFinish={() => setLlmDownloaded(model)}
         />
       ) : entries.length === 0 ? (
         <p className={styles.addDocument}>
