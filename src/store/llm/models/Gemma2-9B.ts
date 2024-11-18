@@ -3,7 +3,7 @@ import Model from './Model.ts';
 const gemma2_9B = new Model({
   title: 'Gemma2-9B',
   url: 'https://uploads.nico.dev/mlc-llm-libs/gemma-2-9b-it_q4f16_MLC/',
-  size: 5210974063,
+  size: 4677059380,
   libUrl:
     'https://uploads.nico.dev/mlc-llm-libs/gemma-2-9b-it_q4f16_MLC/lib/gemma-2-9b-it-q4f16_1-webgpu.wasm',
   requiredFeatures: ['shader-f16'],

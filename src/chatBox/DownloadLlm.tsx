@@ -29,7 +29,7 @@ const DownloadLlm: React.FC<{ className?: string; onFinish: () => void }> = ({
           setDownloadLLMRunning(false);
           onFinish();
         }}
-        contentWidth={310}
+        contentWidth={330}
         classNameIconWrapper={styles.buttonIconWrapper}
       >
         download {model.title} (
