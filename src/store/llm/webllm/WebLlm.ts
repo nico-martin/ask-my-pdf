@@ -17,10 +17,10 @@ class WebLlm implements LlmInterface {
   }
 
   public initialize = async (
-    callback: (data: InitializeCallbackData) => void
+    callback: (data: InitializeCallbackData) => void = null
   ): Promise<boolean> => {
     this.engine = await CreateMLCEngine(this.model.id, {
-      initProgressCallback: callback,
+      initProgressCallback: callback ? callback : null,
       appConfig: {
         model_list: [
           {
@@ -38,6 +38,9 @@ class WebLlm implements LlmInterface {
     text: string,
     callback: (data: GenerateCallbackData) => void
   ): Promise<string> => {
+    if (!this.engine) {
+      await this.initialize();
+    }
     const chunks = await this.engine.chat.completions.create({
       messages: [
         { role: 'system', content: this.systemPrompt },
