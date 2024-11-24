@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActiveLines, Benchmarks } from './types';
 import { VectorDBEntry } from '@store/db.ts';
+import { GenerateCallbackStats } from '@store/llm/types.ts';
 
 export interface RagContext {
   pdfTitle: string;
@@ -11,7 +12,11 @@ export interface RagContext {
     total: number;
   };
   entriesProcessingLoading: boolean;
-  benchmarks: Benchmarks;
+  processMeta: {
+    benchmarks: Benchmarks;
+    modelId: string;
+    stats: GenerateCallbackStats;
+  };
   entries: Array<VectorDBEntry>;
   prompt: string;
   llmResponse: string;
@@ -31,13 +36,17 @@ const ragContext = React.createContext<RagContext>({
     total: 0,
   },
   entriesProcessingLoading: false,
-  benchmarks: {
-    pdfParsedMillis: 0,
-    entriesVectorized: 0,
-    entriesVectorizedMillis: 0,
-    searchDbCount: 0,
-    searchDbMillis: 0,
-    generatedMillis: 0,
+  processMeta: {
+    benchmarks: {
+      pdfParsedMillis: 0,
+      entriesVectorized: 0,
+      entriesVectorizedMillis: 0,
+      searchDbCount: 0,
+      searchDbMillis: 0,
+      generatedMillis: 0,
+    },
+    modelId: '',
+    stats: null,
   },
   entries: [],
   prompt: '',

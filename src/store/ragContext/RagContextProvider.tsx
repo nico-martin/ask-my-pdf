@@ -8,6 +8,7 @@ import useLlm from '@store/llm/useLlm.ts';
 import PdfParserClass from '@utils/PdfParser/PdfParser.ts';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';
 import { FeatureExtractionModel } from '@utils/vectorDB/VectorDB.ts';
+import { GenerateCallbackStats } from '@store/llm/types.ts';
 
 const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -32,6 +33,8 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
   });
   const [prompt, setPrompt] = React.useState<string>('');
   const [llmResponse, setLlmResponse] = React.useState<string>('');
+  const [modelId, setModelId] = React.useState<string>('');
+  const [stats, setStats] = React.useState<GenerateCallbackStats>(null);
   const [results, setResults] = React.useState<Array<[VectorDBEntry, number]>>(
     []
   );
@@ -184,7 +187,12 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
     setPrompt(prompt);
 
     const startedLlm = new Date();
-    const t = await generate(prompt, (str) => setLlmResponse(str.output));
+    const t = await generate(prompt, (str) => {
+      setLlmResponse(str.output);
+      setModelId(str.modelId);
+      str.stats && console.log('Stats', str.stats);
+      str.stats && setStats(str.stats);
+    });
     setBenchmark(
       'generatedMillis',
       new Date().getTime() - startedLlm.getTime()
@@ -200,7 +208,7 @@ const RagContextProvider: React.FC<{ children: React.ReactElement }> = ({
         parsePdf,
         entriesProcessing,
         entriesProcessingLoading,
-        benchmarks,
+        processMeta: { benchmarks, modelId, stats },
         entries,
         prompt,
         llmResponse,

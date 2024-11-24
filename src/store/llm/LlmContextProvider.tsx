@@ -58,7 +58,8 @@ const LlmContextProvider: React.FC<{
         const fullReply = await llmInterface.generate(prompt, (data) =>
           callback({
             output: data.output,
-            stats: null,
+            stats: data.stats,
+            modelId: data.modelId,
           })
         );
         setWorkerBusy(false);

@@ -20,7 +20,7 @@ class WebLlm implements LlmInterface {
     callback: (data: InitializeCallbackData) => void = null
   ): Promise<boolean> => {
     this.engine = await CreateMLCEngine(this.model.id, {
-      initProgressCallback: callback ? callback : null,
+      ...(callback ? { initProgressCallback: callback } : {}),
       appConfig: {
         model_list: [
           {
@@ -55,9 +55,9 @@ class WebLlm implements LlmInterface {
     for await (const chunk of chunks) {
       reply += chunk.choices[0]?.delta.content || '';
       if (chunk.usage) {
-        callback({ output: reply, stats: chunk.usage });
+        callback({ output: reply, stats: chunk.usage, modelId: this.model.id });
       } else {
-        callback({ output: reply });
+        callback({ output: reply, modelId: this.model.id });
       }
     }
 

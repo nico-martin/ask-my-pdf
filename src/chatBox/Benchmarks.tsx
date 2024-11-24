@@ -6,26 +6,35 @@ import { formatMilliseconds } from '@utils/functions.ts';
 import styles from './Benchmarks.module.css';
 import useSettingsContext from '@store/settings/useSettingsContext.ts';
 import { FEATURE_EXTRACTION_MODEL_METAS } from '@store/settings/constants.ts';
-import useLlm from '@store/llm/useLlm.ts';
+import models from '@store/llm/models';
 
 const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
-  const { model } = useLlm();
-  const { benchmarks } = useRagContext();
+  const { processMeta } = useRagContext();
   const { settings } = useSettingsContext();
-  return (
+
+  const model =
+    models.find((model) => model.model.id === processMeta?.modelId) ||
+    models[0];
+
+  return !processMeta?.benchmarks ? null : (
     <div className={cn(className, styles.root)}>
       <h3>Benchmarks</h3>
       <ul className={styles.list}>
         <li>
-          PDF parsed in <b>{formatMilliseconds(benchmarks.pdfParsedMillis)}</b>{' '}
+          PDF parsed in{' '}
+          <b>{formatMilliseconds(processMeta.benchmarks.pdfParsedMillis)}</b>{' '}
           with{' '}
           <a href="https://www.npmjs.com/package/pdfjs-dist" target="_blank">
             PDF.js
           </a>
         </li>
         <li>
-          <b>{benchmarks.entriesVectorized}</b> strings vectorized in{' '}
-          <b>{formatMilliseconds(benchmarks.entriesVectorizedMillis)}</b> using{' '}
+          <b>{processMeta.benchmarks.entriesVectorized}</b> strings vectorized
+          in{' '}
+          <b>
+            {formatMilliseconds(processMeta.benchmarks.entriesVectorizedMillis)}
+          </b>{' '}
+          using{' '}
           <a
             href={
               FEATURE_EXTRACTION_MODEL_METAS[settings.featureExtractionModel]
@@ -51,15 +60,15 @@ const Benchmarks: React.FC<{ className?: string }> = ({ className = '' }) => {
           </a>
         </li>
         <li>
-          <b>{benchmarks.searchDbCount}</b> matching entries found in{' '}
-          <b>{formatMilliseconds(benchmarks.searchDbMillis)}</b>
+          <b>{processMeta.benchmarks.searchDbCount}</b> matching entries found
+          in <b>{formatMilliseconds(processMeta.benchmarks.searchDbMillis)}</b>
         </li>
         <li>
           Answer generated with{' '}
-          <a href={model.cardLink} target="_blank">
-            {model.title}
+          <a href={model.model.cardLink} target="_blank">
+            {model.model.title}
           </a>{' '}
-          in <b>{formatMilliseconds(benchmarks.generatedMillis)}</b>
+          in <b>{formatMilliseconds(processMeta.benchmarks.generatedMillis)}</b>
         </li>
       </ul>
     </div>

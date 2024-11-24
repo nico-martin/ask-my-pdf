@@ -50,7 +50,7 @@ class PromptApi implements LlmInterface {
     let answer = '';
     for await (const chunk of stream) {
       answer = chunk;
-      callback({ output: answer });
+      callback({ output: answer, stats: null, modelId: 'prompt-api' });
     }
     this.messages = [
       ...this.messages,

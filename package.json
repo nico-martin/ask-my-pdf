@@ -1,6 +1,6 @@
 {
   "name": "ask-my-pdf",
-  "version": "0.4.3",
+  "version": "0.4.5",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@huggingface/transformers": "^3.0.2",
-    "@mlc-ai/web-llm": "^0.2.56",
+    "@mlc-ai/web-llm": "^0.2.76",
     "@mlc-ai/web-tokenizers": "^0.1.2",
     "@nico-martin/tvmjs": "^0.22.0-dev0",
     "js-cookie": "^3.0.5",
